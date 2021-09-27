@@ -1,0 +1,21 @@
+<%
+    pcPageTitle = IIF(type("pcTitle") = "C", pcTitle, pcFilename)
+%>
+<% Layout="~/views/_layoutpage.wcs" %>
+
+<div class="container">
+    <%= pcMarkdown %>
+</div>
+
+
+<link rel="stylesheet" href="~/lib/highlightjs/styles/vs2015.css">
+<script src="~/lib/highlightjs/highlight.pack.js"></script>
+<script>
+    function highlightCode() {
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightBlock(pres[i]);
+        }
+    }
+    highlightCode();
+</script>

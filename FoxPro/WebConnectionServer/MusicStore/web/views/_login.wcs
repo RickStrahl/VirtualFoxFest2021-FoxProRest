@@ -1,0 +1,102 @@
+﻿<% pcPageTitle = "Application Sign in" %>
+<% Layout="~/views/_layoutpage.wcs" %>
+<%
+if vartype(pcErrorMessage) !="C"
+  pcErrorMessage =""
+endif
+if vartype(pcUsername) !="C"
+  pcUserName =""
+endif
+if vartype(pcPassword) !="C"
+  pcPassword =""
+endif
+if vartype(pcReturnUrl) !="C"
+  pcReturnUrl =""
+endif
+if vartype(pcDisplayMessage) != "C"
+   pcDisplayMessage = ""
+endif
+%>
+
+<div class="container">
+    <div class="page-header-text">
+        <i class="fas fa-unlock-alt"></i>
+        Application Sign in
+    </div>
+
+    <%= HtmlErrorDisplay(pcErrorMessage,"warning") %>
+
+    <form action="" method="POST">
+
+        <div id="WebLogin" class="card" style="max-width: 550px; margin: 0 auto;">
+            <div class="card-header">
+                Please sign in
+            </div>
+        
+            <% if !empty(pcDisplayMessage) %>
+            <div style="background: #e1f0ff; padding: 8px 12px; font-size: 0.8em">
+                <i class="fas fa-info-circle"></i> 
+                <%= pcDisplayMessage %>
+            </div>
+            <% endif %>
+
+            <div class="card-body">
+
+                <div class="form-group">
+                    <div class="input-group ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="far fa-fw fa-envelope"></i>
+                            </span>
+                        </div>
+                        <input type="text" name="WebLogin_txtUsername" id="WebLogin_txtUsername"
+                               class="form-control" placeholder="Enter your email address"
+                               value="<%=  pcUserName %>"
+                               autocapitalize="off"
+                               autocomplete="off"
+                               spellcheck="false"
+                               autocorrect="off" />
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="input-group ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-fw fa-unlock-alt"></i>
+                            </span>
+                        </div>
+                        <input type="password"
+                               name="WebLogin_txtPassword" id="WebLogin_txtPassword"
+                               class="form-control" id="form-group-input" placeholder="Enter your password">
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-left: 5px;">
+                    <input id="WebLogin_chkRememberMe" name="WebLogin_chkRememberMe" type="checkbox" value="true">
+                    <input name="WebLogin_chkRememberMe" type="hidden" value="false">
+                    <label for="WebLogin_chkRememberMe">Remember me on this device</label>
+                </div>
+
+                <button type="submit" id="btnSubmit" name="WebLogin_btnLogin" class="btn btn-primary" style="width: 120px" value="SIGN IN">
+                    <i class="fa fa-lock"></i> Sign In
+                </button>
+
+                <% if Process.lIsAuthenticated %>
+                <a href="logout.<%= JUSTEXT( Request.GetPhysicalPath() ) %>"
+                   class="btn btn-default btn-sm float-right">
+                    <i class="fas fa-lock"></i>
+                    Sign out
+                </a>
+                <% endif %>
+
+            </div> <!-- card-body -->
+        </div> <!-- card -->
+
+        <input type="hidden" name="ReturnUrl" value="<%= pcReturnUrl %>" />
+    </form>
+    <script>
+        document.getElementById("WebLogin_txtUsername").focus();
+    </script>
+</div>

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="~/touch-icon.png" />
+
+    <link rel="icon" href="~/touch-icon.png" />
+    <meta name="msapplication-TileImage" content="~/touch-icon.png">
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/application.css" rel="stylesheet" /> 
+</head>
+<body>
+    <div class="banner">
+        <!-- Slideout Menu Toggle - Hamburger menu -->
+        <a class="slide-menu-toggle-open no-slide-menu"
+           title="More...">
+            <i class="fas fa-bars"></i>
+        </a>
+
+        <!-- Icon and Company Logo -->
+        <div class="title-bar no-slide-menu">
+            <a href="~/">
+                <img class="title-bar-icon" src="~/images/icon.png" />
+                <div style="float: left; margin: 4px 5px; line-height: 1.0">
+                    <i style="color: #0092d0; font-size: 0.9em; font-weight: bold;">West Wind</i><br />
+                    <i style="color: whitesmoke; font-size: 1.65em; font-weight: 600;">Web Connection</i>
+                </div>
+            </a>
+        </div>
+
+        <!-- top right nav menu - .hidable for options that hide on small sizes -->
+        <nav class="banner-menu-top float-right">
+            <a href="http://west-wind.com/webconnection/docs/" target="wc-docs" class="hidable">
+                <i class="fas fa-book"></i>
+                Docs
+            </a>
+            <a href="~/">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+        </nav>
+    </div>
+
+
+    <div id="MainView">
+        <%= RenderContent() %>
+    </div> <!-- end #MainView -->
+
+    <footer>
+        <a href="http://www.west-wind.com/" class="float-right">
+            <img src="~/images/WestwindText.png"/>
+        </a>
+        <small>&copy; Your Company, 2018</small>
+    </footer>
+
+    <!-- slide in menu - Remove if you don't use it --> 
+    <nav class="slide-menu">
+        <div style="padding: 10px 10px 10px 3px;">
+            <a class="disabled">
+                <i class="fas fa-home"></i>
+                Main Menu
+            </a>
+
+            <a href="~/">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+
+            <a href="#" class="indented">
+                <i class="far fa-newspaper"></i>
+                Sub Link
+            </a>
+            <a href="#" class="indented">
+                <i class="far fa-newspaper"></i>
+                Sub Link 2
+            </a>
+
+            <a href="#">
+                <i class="fa fa-lock-open"></i>
+                Sign in
+            </a>
+        </div>
+    </nav>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/scripts/ww.jquery.min.js"></script>
+
+    <!-- add these only if you use Bootstrap dropdowns or modals -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // toggle menu, handle menu click and outside click to close
+        $(document).on("click",
+            ".slide-menu-toggle-open,.slide-menu-toggle-close," +
+            ".slide-menu a, #SamplesLink,.slide-menu",
+            function () {
+                $(".slide-menu").toggleClass("active");
+            });     
+        $(document).on("click", "#MainView",
+            function () {
+                var $sm = $(".slide-menu");
+                if ($sm.hasClass("active")) $sm.removeClass("active");
+            });
+    </script>
+
+</body>
+</html>

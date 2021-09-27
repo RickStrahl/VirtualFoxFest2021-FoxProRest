@@ -1,0 +1,60 @@
+﻿      </div> <!-- container -->
+   </div> <!-- end #MainView -->
+
+    <footer>
+        <a href="http://www.west-wind.com/" class="float-right">
+            <img src="~/images/WestwindText.png" />
+        </a>
+        <small>&copy; Your Company, 2018</small>
+    </footer>
+
+    <!-- slide in menu - Remove if you don't use it --> 
+  	<nav class="slide-menu">
+        <div style="padding: 10px 10px 10px 3px;">
+            <a class="disabled">
+                <i class="fas fa-home"></i>
+                Main Menu
+            </a>
+
+            <a href="~/">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+
+            <a href="#" class="indented">
+                <i class="far fa-newspaper"></i>
+                Sub Link
+            </a>
+            <a href="#" class="indented">
+                <i class="far fa-newspaper"></i>
+                Sub Link 2
+            </a>
+
+            <a href="#">
+                <i class="fa fa-lock-open"></i>
+                Sign in
+            </a>
+        </div>
+    </nav>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/scripts/ww.jquery.min.js"></script>
+    <!-- add these only if you use Bootstrap dropdowns or modals -->    
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // toggle menu, handle menu click and outside click to close
+        $(document).on("click",
+            ".slide-menu-toggle-open,.slide-menu-toggle-close," +
+            ".slide-menu a, #SamplesLink,.slide-menu",
+            function () {
+                $(".slide-menu").toggleClass("active");
+            });     
+        $(document).on("click", "#MainView",
+            function () {
+                var $sm = $(".slide-menu");
+                if ($sm.hasClass("active")) $sm.removeClass("active");
+            });
+    </script>
+
+</body>
+</html>

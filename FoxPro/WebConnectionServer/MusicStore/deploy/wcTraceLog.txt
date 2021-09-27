@@ -1,0 +1,36 @@
+9/22/2021 5:10:30 PM - Processing Error - id=1
+
+<pre>
+     Error: 1923
+   Message: Object SERIALIZER is not found.
+   Details: SERIALIZER
+      Code: Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,albumPk, artistPk,songName,unitPrice,"
+   Program: onprocessinit
+   Line No: 98
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+9/22/2021 5:10:48 PM - Processing Error - id=1
+
+<pre>
+     Error: 1923
+   Message: Object SERIALIZER is not found.
+   Details: SERIALIZER
+      Code: Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,albumPk, artistPk,songName,unitPrice,"
+   Program: onprocessinit
+   Line No: 98
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+9/22/2021 5:10:54 PM - Processing Error - id=1
+
+<pre>
+     Error: 1923
+   Message: Object SERIALIZER is not found.
+   Details: SERIALIZER
+      Code: Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,albumPk, artistPk,songName,unitPrice,"
+   Program: onprocessinit
+   Line No: 98
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>

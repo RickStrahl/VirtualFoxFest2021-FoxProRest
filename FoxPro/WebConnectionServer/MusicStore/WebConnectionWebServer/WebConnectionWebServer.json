@@ -1,0 +1,21 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Warning",
+      "Westwind.WebConnection": "Warning"
+    }
+  },
+  "WebRoot": "..\\web",
+  "Port": 5200,
+  "UseSsl": null,
+  "UseLiveReload": true,
+  "OpenBrowser": true,
+  "ShowUrls": true,
+  "DefaultFiles": "default.htm,index.html",
+  "AllowedHosts": "*",
+  "WebConnectionSettings": {
+
+  }
+}
