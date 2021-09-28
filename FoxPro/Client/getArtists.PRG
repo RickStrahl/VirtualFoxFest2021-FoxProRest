@@ -17,4 +17,3 @@ FOR	EACH loArtist IN loArtists FoxObject
 	? loArtist.ArtistName + " (" +  TRANSFORM(loArtist.AlbumCount) + ")"
 ENDFOR
 
-

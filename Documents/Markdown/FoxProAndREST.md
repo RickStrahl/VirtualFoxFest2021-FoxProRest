@@ -1,47 +1,48 @@
-# Creating and Consuming REST Services with FoxPro
+# Building and Consuming REST Services with FoxPro
 
 REST APIs, or Web Services that use plain HTTP requests and JSON have become the replacement for more complex SOAP based service architectures of the past. Most modern APIs available on the Web — from Credit Card Processors, to eCommerce back ends, to mail services, Cloud Provider APIs and Social Media data access —  all use REST services or variants thereof to make remote data available for remote interaction. 
 
 REST services tend to be much simpler to build and consume than SOAP, because they don't require any custom tooling as SOAP/WSDL services did. They use the HTTP protocol for sending requests over the Web, and typically use JSON's as their serialization format. JSON's simple type structure is inherently easier to create and parse into object structures from a language like FoxPro and REST's clear separation between the message (JSON) and the protocol layers (HTTP Headers/Protocol) reduces the amount of infrastructure that is required in order to use the technology.
 
-Because of its simplicity REST can also be directly consumed by Web applications rather than going through a server proxy. JSON is a JavaScript native format (essentially an object literal) and so JavaScript based applications can easily consume REST services directly.
+Because of its simplicity REST can also be directly consumed by Web applications rather than going through a server proxy. JSON is a JavaScript native format (essentially an *object literal*) and so any JavaScript applications can easily consume REST services directly.
 
-This makes REST useful for double duty both as a remote data service API and a backend for internal Web applications. Often these two tasks can overlap, with applications exposing both the Web application for interactive use (SPA applications) and a service for remote data API access. Many big services like Twitter, Facebook and Cloud Providers like Azure use APIs to drive their front ends while also exposing those same APIs for remote access.
+This makes REST useful for double duty both as a remote data service API and a backend for internal SPA type Web applications. Often these two tasks can overlap, with applications exposing both the Web application for interactive Web and App use, and a service for remote data API access. Many big services like Twitter, Facebook and Cloud Providers like Azure use APIs to drive their front ends while also exposing those same APIs for remote access.
 
 One of the big reasons of REST's popularity and success in recent years is its simplicity: All you need to consume a REST Service is an HTTP Client and a JSON parser. On the server too no special tools are required beyond a Web Server and the ability to capture HTTP requests and write HTTP responses which means that its easy to create REST service endpoints manually, and there are lots of support frameworks to choose from to provide automated REST service integrations.
 
 ## Client and Server
-For developers there are two scenarios that you're going to deal with when it comes to REST Services:
+For this article there are two scenarios that you're going to deal with when it comes to REST Services:
 
 * Consuming REST Services
-* Creating Server APIs using REST
+* Creating Server APIs using REST Services
 
-In this article I'll talk about both of these scenarios in the context of Visual FoxPro. We'll start with retrieving some data from an HTTP service and consuming it in FoxPro, and then jump to the other end and create a REST JSON service on the server side using [Web Connection](https://webconnection.west-wind.com). 
+I'll talk about both of these scenarios in the context of Visual FoxPro. We'll start with retrieving some data from an HTTP service and consuming it in FoxPro, and then jump to the other end and create a REST JSON service on the server side using [Web Connection](https://webconnection.west-wind.com). 
 
 But before the practical bits, let's talk about what REST is and what makes it unique and how it differs from what came before.
 
 ## So what is REST?
-Unlike older protocols like SOAP, REST is not a standard and doesn't have a formal definition. Rather it's a set of common *'recommendations'* or a *'style'* of building HTTP based Web Services.
+Unlike older protocols like SOAP, . REST is not a specific standard or even a specification and it doesn't have a formal definition. There's no Web site that you can go to to look up how to specifically architect your HTTP Service. Rather it's a set of common *'recommendations'* or a *'style'* of building HTTP based Web Services based on the semantics of the HTTP protocol.
 
-Officially REST stands for **Representational State Transfer** which is a fairly cryptic term to describe what amounts to Web based APIs. The idea of the term is that you have fixed URLs from which you can transfer state - or data - back and forth between a client and server. 
-
-REST is not a specific standard or even a specification. There's no Web site that you can go to to look up how to specifically architect your HTTP Service. Rather it's a loose set of 'recommendations' based on the semantics of the HTTP protocol.
+Officially REST stands for **Representational State Transfer** which is a fairly cryptic term to describe what amounts to Web based APIs. The idea behind the term is that you have fixed URLs from which you can transfer state - or data - back and forth between a client and server. 
 
 Since there isn't a fixed standard you can look at, here's Wikipidia's broad definition:
 
 > Representational state transfer (REST) is a software **architectural style** that was created to guide the design and development of the architecture for the World Wide Web. REST defines a **set of constraints** for how the architecture of an Internet-scale distributed hypermedia system, such as the Web, should behave. The REST architectural style emphasizes the scalability of interactions between components, uniform interfaces, independent deployment of components, and the creation of a layered architecture to facilitate caching components to reduce user-perceived latency, enforce security, and encapsulate legacy systems.
 
-As you can see this is pretty vague and open to interpretation with words like **architectual style** and general **set of constraints**. There's nothing specific about this 'recommendation', other than it uses HTTP to access and send data.
+This is pretty vague and open to interpretation with words like **architectual style** and **general set of constraints**. There's nothing specific about this 'recommendation', other than it uses the HTTP protocol to access and send data.
 
 ## REST is all about HTTP
 REST is all about taking maximum advantage of the HTTP Web protocol. 
 
-HTTP is the protocol used to communicate on the Web. HTTP traditionally has been the protocol of Web Browsers, but more recently the use of Web APIs increasingly sees HTTP use by applications using HTTP client software either built into frameworks or tools used with various languages. Most mobile apps and many desktop applications these days use REST based API calls to provide their data used in these native applications as well. In short, HTTP is very prominently used in today's modern applications.
+HTTP is the protocol used to communicate on the Web. HTTP traditionally has been the protocol of Web Browsers, but more recently the use of Web APIs increasingly sees HTTP use by applications using HTTP client software either built into frameworks or tools.
 
-The HTTP protocol is used to send and retrieve data in a simple, one-way transactional manner: A request is made with headers and content, and a response is returned also with headers and content. Requests only go one way from the client to the server. While the server can return data from a request, it cannot directly call back to a client (technically it's possible using WebSockets but that's another store for another day).
+HTTP is very prominently used in today's modern applications even outside of the context of traditional Web applications: You see APIs used heavily these days in native Mobile apps as well as many desktop applications.
 
-Finally HTTP is inherently stateless - each request has to provide its own context to the server as it opens and closes a connection to the server. There's no explicit persistent state across requests unless some mechanism like HTTP Cookies or custom headers are used to forward information between requests. It's unusual though to use these mechanisms for APIs. The only persistant state that's usually required is `Authorization` for which there are other ways such as Bearer Tokens headers that can be sent on every request.
+The HTTP protocol is used to send and retrieve data in a simple, one-way transactional manner: A request is made with headers and content, and a response is returned also with headers and content. 
 
+Requests only go one way from the client to the server. While the server can return data from in response to a request, it cannot independently call back to the client outside of an incoming request context. There are other ways to do this namely using Web Sockets that are built on top of HTTP, but that's a separate protocol and not applicable to REST.
+
+Finally it's important to remember that HTTP is inherently stateless - each request has to provide its own context to the server as each request opens and closes a connection to the server. There's no explicit persistent state across requests unless some mechanism like HTTP Cookies or custom headers are used between requests. It's unusual though to use these mechanisms for APIs - API clients tend to keep state in the context of the application and then send it as part of the request or the request headers which most commonly includes authentication in the form of auth tokens.
 
 Here's what the HTTP Request and Response are made up of:
 
@@ -59,13 +60,15 @@ Here's what the HTTP Request and Response are made up of:
 * HTTP Response Headers
 * Response Body
 
-So here's what this looks like in a couple of live requests. This first example is a simple `GET` request that only retrieves data:
+Here's what a real HTTP request looks like. This first example is a simple `GET` request that only retrieves JSON data from a server:
 
 ![](REST-GET-Request.png)
 
- `GET` describes the HTTP verb used against the URL which retrieves an Artist. `GET` is a retrieval only request - no data is sent to server.
+ `GET` describes the HTTP verb used against the URL which retrieves an Artist instance. `GET` is a retrieval only request and the server returns an HTTP response, which is a nested JSON object.
  
- Any REST request lives at a fixed URL which is unique, and is accessed via an HTTP Verb - `GET` in this case. The combination of URL + HTTP Verb make for a unique resource that can be easily linked to or bookmarked in browsers. Commonly used verbs are `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS` which describe an 'action' on the resource you are accessing. Multiple verbs are often overloaded on a single URL that have different behavior depending on using a `GET` to retrieve and Artist for example, or `POST`/`PUT` to add or update and `DELETE` to delete.
+ Any REST request lives at a fixed URL which is unique, and is accessed via an HTTP Verb - `GET` in this case. The combination of URL plus HTTP Verb make for a unique resource that can be easily linked to or bookmarked in browsers. 
+ 
+ Commonly used verbs are `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS` which describe an 'action' on the resource you are accessing. Multiple verbs are often overloaded on a single URL that have different behavior depending on using a `GET` to retrieve and Artist for example, or `POST`/`PUT` to add or update and `DELETE` to delete.
  
  The response in this example returns the requested Artist as a JSON (`application/json`) response. The response consists of HTTP headers that describe protocol and content information from the server and can also be used to send non-data related meta-data from the application to the client. 
  
@@ -75,11 +78,11 @@ So here's what this looks like in a couple of live requests. This first example 
 
 This particular request is an update operation that updates an Artist in a music store application. 
 
-The POST operation is different in that it uses the `POST` verb, and provides a content body that contains the JSON request data. The data sent can be raw data like a JSON or XML document, but can also be Urlencoded form data, a multipart form upload, raw binary data like Pdf or Zip file... it can be anything. Whenever you send data to the server you have to specify a `Content-Type` so that the server knows how to handle the incoming data. Here the data is JSON so `Content-Type: application/json`.
+The POST operation is different in that it uses the `POST` verb, and provides a content body that contains the JSON request data. The data sent can be raw data like a JSON or XML document, but can also be Urlencoded form data, a multipart form upload, raw binary data like PDF or Zip file... it can be anything. Whenever you send data to the server you have to specify a `Content-Type` so that the server knows how to handle the incoming data. Here the data is JSON so `Content-Type: application/json`.
 
-The HTTP Headers provide protocol instructions and information such as the calling browser, what type of content is requested or optionally sent, and so on. Additionally you can also handle security via the `Authorization` header. This example uses a Bearer token that was previously retrieved via a Authentication API call. Headers basically provide meta data: Data that describes the request, or additional data that is separate from the data in the content of a request.
+The HTTP Headers provide protocol instructions and information such as the calling browser, what type of content is requested or optionally sent, and so on. Additionally you can also handle security via the `Authorization` header. This example uses a **Bearer Token** that was previously retrieved via a `Authentication` API call. Headers basically provide meta data: Data that describes the request, or additional data that is separate from the data in the content of a request.
 
-`POST` and `PUT` requests like the one above also have a request body, which is raw data sent to the server. Here the data sent is serialized JSON of an Artist object. Other verbs like `GET`, `DELETE`, `OPTIONS`, `PATCH` etc. don't have a Request body. In fact, `GET` request is considerably simpler:
+`POST` and `PUT` requests like also have a request body, which is raw data sent to the server. The data sent is serialized JSON of an Artist object to update the server with. 
 
 ### HTTP Advantages
 HTTP is a great mechanism for applications because it provides many features 'out of the box' that don't have to be implemented for each tool or application.
@@ -89,8 +92,8 @@ Here are a few things that REST can take advantage of with HTTP:
 * API Routing via URL
 * Unique Resource Access via URL
 * API Operations via HTTP Verbs
-* API Encryption via HTTPS (TLS)
-* Caching via HTTP Resource Caching
+* Data Encryption via HTTPS (TLS)
+* Caching via built-in HTTP Resource Caching
 * Authorization via HTTP Authorization (+server auth support)
 * Meta Data via HTTP Headers
 
@@ -123,10 +126,9 @@ There are quite a few Verbs available and each has a 'suggested' meaning.
 * **OPTIONS**: Return headers only
 * **PATCH**: Partial Update
 
-Of these `POST` and `PUT` are the only ones that support a content body to send data to the server. All others are either data retrieval or operation commands.
+Of these `POST` and `PUT` are the only ones that support a content body to send data to the server. All others are either data retrieval or operation commands. 
 
-These verbs are suggestions. Requests are not going to fail if you update data via a `POST` operation instead of using the suggested `PUT`. However, it's a good idea to follow these rules as best as possible for consistency, and easy understanding of your API. It'll make your API easier to use.
-
+These verbs are **suggestions**. Requests are not going to fail if you update data via a `POST` operation instead of using the suggested `PUT` unless the server applications explicitly checks and rejects requests based on a verb. However, it's a good idea to follow these **suggestions** as best as possible for consistency, and easy understanding of your API and when necessary make them flexible so they just work. It'll make your API easier to use.
 
 ### Encrypted Content via HTTPS
 HTTP has built in support for `https://` which uses certificate based security keys for encrypting content between client and server. This encryption ensures that content on the wire is encrypted and can't be spied upon without access to the keys of the certificates on both sides of the connection. This avoids man in the middle attacks. To use `https://` encryption a server secure certificate is required but these days you can set up free LetsEncrypt Certificates on most Web servers in minutes. For Windows Server and IIS look at [Win-Acme](https://www.win-acme.com/) to set up Lets Encrypt certificates on IIS for free.
@@ -163,7 +165,7 @@ Ok - enough theory let's kick the tires and use some RESTful APIs. Let's start w
 There are a lot of options for HTTP access. I'm obviously biased towards the `wwHttp` library as that's what I usually use and as it provides full featured HTTP support for many different scenarios. That's what I'll use for the examples here and the support libraries are provided with the samples.
 
 #### A simple WinHttp Client
-If you'd rather use a native tool without extra dependencies you can use WinHttp which is built into Windows. A very simplistic, generic HTTP client looks something like this:
+If you'd rather use a native tool without extra dependencies you can use **WinHttp** which is built into Windows. It has both Win32 and COM APIs. Using the COM API here's a very simplistic, generic HTTP client you can use instead of `wwHttp`:
 
 ```foxpro
 ************************************************************************
@@ -172,10 +174,8 @@ If you'd rather use a native tool without extra dependencies you can use WinHttp
 FUNCTION WinHttp(lcUrl, lcVerb, lcPostData, lcContentType)
 LOCAL lcResult, loHttp
 
-*** FOR DEMOS ONLY!
 IF EMPTY(lcUrl) 
-   lcUrl = "https://albumviewer.west-wind.com/api/artist/1"
-   ** RETURN null
+   RETURN null
 ENDIF
 IF EMPTY(lcVerb)
    lcVerb = "GET"
@@ -212,7 +212,6 @@ You can use it with very simple code like this:
 
 ```foxpro
 SET PROCEDURE TO WinHttp ADDITIVE
-
 lcResult = WinHttp("https://albumviewer.west-wind.com/api/artist/1")
 ? PADR(lcResult,1000)
 
@@ -222,16 +221,15 @@ TEXT TO lcJson NOSHOW
   "password": "test"
 }
 ENDTEXT
-
 lcResult = WinHttp("https://albumviewer.west-wind.com/api/authenticate","POST",;
                    lcJson,"application/json")
 ? lcResult   
 ```
 
-This wrapper works but it's a pretty basic implementation. It needs additional error handling, dealing with binary data, message updates and a few other things, but for starters it's a workable solution.
+This is a pretty basic implementation. It needs additional error handling, dealing with binary data, progress handling and a few other things, but for starters it's a workable solution.
 
 #### wwHttp - A little Extra
-wwHttp provides a lot more functionality out of the box, supporting many of the more obscure HTTP features. It supports a number of convenience helpers to make it easy to parse both content and headers, encode and decode content, handle Gzip/Deflate compression, binary content, status updates and more. A version of wwHttp is provided with the samples.
+The `wwHttp` provides a lot more functionality out of the box. It supports a number of convenience helpers to make it easy to parse both content and headers, encode and decode content, progress events, handle Gzip/Deflate compression, binary content, status updates and more. A compiled version of `wwHttp` is provided with the samples.
 
 Using the same service as above using `wwHttp` looks something like this:
 
@@ -1281,53 +1279,472 @@ This simple method demonstrates the basics of how REST Endpoints work in Web Con
 
 Pretty simple right?
 
-#### Creating the API Artist Service
+#### Creating the API Artist EndPoints
+Ok let's dive in then and create the service interface for:
+
+* Retrieving an Artist List
+* Retrieving an individual Artist
+* Updating an Artist
+* Deleting an Artist
+
+##### Returning a list of Artists from a Cursor
+The first request will be the Artist list that is returned as a cursor.
+
+To create a new endpoint method in Web Connection all we need to do is add another method to the `MusicStoreProcess` class. I'm going to use a business object class for the Artist operations that work against a data set. You can find both of these with the sample data on [GitHub](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest).
+
+* [MusicStore Business Objects](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/blob/main/FoxPro/WebConnectionServer/MusicStore/deploy/musicstore.PRG)
+* [MusicStore Data Files](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/tree/main/FoxPro/WebConnectionServer/MusicStore/deploy/Data)
+
+Here's the Artists method which can be accessed with `http://localhost:52000/Artists.ms`:
+
+```foxpro
+************************************************************************
+FUNCTION Artists()
+****************************************
+
+loArtistBus = CREATEOBJECT("cArtist")
+lnArtistCount = loArtistBus.GetArtistList()
+
+Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,"
+
+RETURN "cursor:TArtists"
+ENDFUNC
+```
+
+The code for this bit is very simple: The business object returns a list of all articles as a cursor named `TArtists` and we return that cursor as a result of the method via the same `cursor:TArtists` syntax that we used earlier when generating JSON on the client. No surprise there - the server framework is using the same serializer.
+
+You can open this URL in the browser and if you have a [JSON addin](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) you can see nicely formatted JSON:
+
+![](ArtistsListBrowser.png)
+
+Notice that property names are returned in *camelCase*. By default FoxPro will serialize only lower case property names, but because I used the `PropertyNameOverrides` property I can explicitly specify field names with custom case.
+
+While the browser works for looking at `GET` requests, I prefer to set up URLS for testing in a separate tool like [Postman](https://postman.com) or [WebSurge](https://websurge.west-wind.com). This is especially useful if you need to `POST` data to the server since there's no easy way to do that repeatedly in the browser without creating a small app. Storing all the requests in one place is also a nice way to quickly see what operations are available on your API.
+
+Here's the `Artists` request - and the others we'll create - in [WebSurge](https://websurge.west-wind.com):
+
+![](ArtistListWebSurge.png)
+
+#### Object Composition: Retrieving an individual Artist
+The previous request was a simple list result with flat objects. But you can also return much more complex structures that nest multiple objects and collections to createa 
+
+Returning an Artist returns a nested structure with Artist, albums and tracks. Lets see how this works.
+
+The key to this is to use the business object to retrieve the base data and then composing a more complex object. Here's the Album method which responds to a URL like `https://localhost/artist?id=1`:
+
+```foxpro
+************************************************************************
+FUNCTION Artist(loArtist)
+****************************************
+LOCAL lnId, lcVerb, loArtistBus
+
+lnId = VAL(Request.QueryString("id"))
+lcVerb = Request.GetHttpVerb()
+
+if (lcVerb == "POST" or lcVerb == "PUT")
+   RETURN this.UpdateArtist(loArtist)   
+ENDIF   
+
+IF lcVerb = "DELETE"
+   loArtistBus = CREATEOBJECT("cArtist")   
+   RETURN loArtistBus.Delete(lnId)  && .T. or .F.
+ENDIF
+
+*** GET Operation
+IF lnId == 0
+  RETURN this.ErrorResponse("Invalid Artist Id","404 Not Found")  
+ENDIF
+
+loArtistBus = CREATEOBJECT("cArtist")
+IF !loArtistBus.Load(lnId)   
+    RETURN this.ErrorResponse("Artist not found.","404 Not Found")
+ENDIF 
+
+*** Lazy load the albums
+loArtistBus.LoadAlbums()
+
+Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,albumPk, artistPk,songName,unitPrice,"
+
+return loArtistBus.oData 
+ENDFUNC
+```
+
+The result is a complex object that returns an album top level object with a contained `albums` collection, each of which in turn has a `tracks` collection:
+
+```json
+{
+  "pk": 2,
+  "artistName": "Accept",
+  "descript": "With their brutal, simple riffs and aggressive...",
+  "amazonUrl": "http://www.amazon.com/Accept/e/B000APZ8S4&linkId=KM4RZR3ECUXWBJ6E",
+  "imageUrl": "http://cps-static.rovicorp.com/3/JPG_400/MI0001/389/M389322.jpg?partner=allrovi.com",
+  "albums": [
+    {
+      "amazonUrl": "http://www.amazon.com/gp/product/B00005NNMJ/&linkId=MQIHT543FNE5PNZU",
+      "artist": {
+        "albums": null,
+        "amazonUrl": "http://www.amazon.com/Accept/e/B000APZ8S4/&linkId=KM4RZR3ECUXWBJ6E",
+        "artistName": "Accept",
+        "descript": "With their brutal, simple riffs and aggressive...",
+        "imageUrl": "http://cps-static.rovicorp.com/3/JPG_40/MI01/389/M389322.jpg?partner=allrovi.com",
+        "pk": 2
+      },
+      "artistPk": 2,
+      "descript": "As cheesey as some of the titles and lyrics on this record are...",
+      "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/519J0xGWgaL._SL250_.jpg",
+      "pk": 2,
+      "title": "Balls to the Wall",
+      "tracks": [
+        {
+          "albumPk": 2,
+          "artistPk": 0,
+          "bytes": 5510424,
+          "length": "5:02",
+          "pk": 2,
+          "songName": "Balls to the Wall",
+          "unitPrice": 0.99
+        },
+        {
+          "albumPk": 2,
+          "artistPk": 0,
+          "bytes": 0,
+          "length": "3:57",
+          "pk": 5090,
+          "songName": "Fight it back",
+          "unitPrice": 0
+        },
+        ...
+      ],
+      "year": 1983
+    },
+    {
+      "amazonUrl": "http://www.amazon.com/gp/product/B00138KM1U/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00138KM1U&linkCode=as2&tag=westwindtechn-20&linkId=AQAYEWNVF5Z36AZB",
+      "artistPk": 2,
+      "descript": "An all time classic. At the time Fast as a Shark was THE heaviest thing made to that date...",
+      "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/51aInWlHfgL._SL250_.jpg",
+      "pk": 3,
+      "title": "Restless and Wild",
+      "tracks": [
+        {
+          "albumPk": 3,
+          "artistPk": 0,
+          "bytes": 3990994,
+          "length": "3:10",
+          "pk": 3,
+          "songName": "Fast As a Shark",
+          "unitPrice": 0.99
+        },
+        ...
+      ],
+      "year": 1982
+    }
+  ]
+}
+```
+                
+So this object 'composed' by the business object using Foxpro code. How does that work? Lets take a look.
+
+The first bit is the `Load()` method which loads up the Artist entity into an `.oData` member. The code in the core business object selects the record and uses `SCATTER NAME` to push the data into the `.oData` entity object:
+
+```foxpro
+FUNCTION Load(lvPk)
+
+IF !DODEFAULT(lvPk)
+  RETURN .F.
+ENDIF
+
+ADDPROPERTY(this.oData,"Albums",NULL)  
+
+RETURN .T.
+```
+
+The code then dynamically adds an `Albums` property which initially is `null`. The property can be lazy loaded via a LoadAlbums method in the `cAlbums` class that returns a collection of albums and tracks for a given artist id:
+
+```foxpro
+FUNCTION LoadAlbums(lnArtistPk)
+LOCAL loAlbum, loBusAlbum, loAlbums
+
+loBusAlbum = CREATEOBJECT("cAlbum")
+loAlbums = CREATEOBJECT("Collection")
+
+*** Load Pks then load each item for detailed list
+loBusAlbum.GetAlbumPkList(lnArtistPk)
+
+SCAN 
+    *** Load the top level album entity only
+    loBusAlbum.Load(TAlbums.pk)
+	
+    *** compose the Track list for each album
+    ADDPROPERTY(loBusAlbums.oData,"Tracks",NULL)
+    loBusAlbums.oData.Tracks = loBusAlbums.LoadSongs(this.oData.Pk)
+
+    loAlbums.Add( loBusAlbum.oData )
+ENDSCAN
+
+RETURN loAlbums
+```
+
+These two methods compose a complex nested object structure as an object graph using FoxPro objects and collections to indicate nesting and relationships. Because everything is an object, you can easily add one object or collection to another, dynamically creating any shape you need to represent to the client. 
+
+This is a powerful feature that goes a little against FoxPro's cursor centric mindset, but it allows you to express data more naturally than as flat table structures - which if you really want them can still be returned as well. Nothing is stopping you from returning separate artist collections for example (as the .NET server we used earlier does).
+
+#### Update Request: Updating an Artist
+So now lets look updating an article from the client. In update scnearios against a Web Connection server with the wwRestProcess, the endpoint can receive **a single object or value** that is translated into a parameter to the endpoint method. 
+
+> #### @icon-info-circle Single Parameter Not Enough? Use Object Composition
+> While a single parameter may sound limiting, remember that you can compose JSON to represent multiple top level objects or values. For example if you wanted to pass 2 parameters you could do pass an object like this:
+> 
+>  `{ parm1: "value 1", parm2: { parm1Value: "value 1.1" } }`
+>
+> where parm1, parm2 etc. are your top level 'parameters'. Or you can use an array to represent multiple disparate parameters. **Composition is the key!**
+
+Here's what the request should look like:
+
+![](PostArtist-Request.png)
+
+Here's what the code for the endpoint method looks like.
+
+```foxpro
+FUNCTION UpdateArtist(loArtist)
+
+IF VARTYPE(loArtist) # "O"
+	ERROR "Invalid data passed."
+ENDIF
+
+lnPk = loArtist.pk
+
+loBusArtist = CREATEOBJECT("cArtist")
+IF lnPk = 0
+	loBusArtist.New()
+ELSE
+	IF !loBusArtist.Load(lnPk)
+	   ERROR "Invalid Artist Id."
+	ENDIF
+ENDIF 
+
+*** Update just the main properties
+loArt = loBusArtist.oData
+loArt.Descript = loArtist.Descript
+loArt.ArtistName = loArtist.ArtistName
+loArt.ImageUrl = loArtist.ImageUrl
+loArt.AmazonUrl = loArtist.AmazonUrl
+
+*** Items are not updated in this sample
+*** Have to manually update each item or delete/add
+
+IF !loBusArtist.Validate() OR ! loBusArtist.Save()
+    ERROR loBusArtist.cErrorMsg
+ENDIF
+
+loBusArtist.LoadAlbums()
+
+Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,albumPk, artistPk,songName,unitPrice,"
+
+RETURN loArt
+ENDFUNC
+```
+
+This method receives an `loArtist` parameter which is the deserialized JSON from the Artist passed in the request. The code checks and ensures that an object was passed and if so tries to the load up the business object's `.oData` from disk. If the Pk is 0 it's a new record, otherwise it's an existing one. If the artist can't be found we throw an `ERROR` which automatically triggers a JSON error response with the error message passed through to the client.
+
+Once we have an Artist instance the object can be updated from the incoming Artist Update data. Once updated the data is validated and saved using the Business object's internal behavior. 
+
+Finally if all went well the object is filled out with albums, to send back to the client. The client can then use the returned object to update its state of the object on its own.
+
+#### HTTP Verb Overloads
+If you've been playing along with this sample, you may have noticed that I used a bit of hand waving in my last example. Can you spot the problem?
+
+The problem is that I used the **same endpoint** for both the `GET` and `POST` operations and also the not yet discussed `DELETE` operation. All of these point at:
+
+```text
+http://localhost:5200/Artist.ms
+```
+
+Web Connection routes requests based on the `.ms` extension and routes to the `Artist()` method, but how do we get to `UpdateArtist()`? The answer lies in a little bit of logic applied in the `Artist()` method itself that sub-routes requests to the appropriate handlers.
+
+If you recall the `Artist()` method I showed earlier was used for the `GET` operation that returns a single artist. The code left out this extra routing, but I'm going to add it back in now:
+
+```foxpro
+FUNCTION Artist(loArtist)
+LOCAL lnId, lcVerb, loArtistBus
+
+lnId = VAL(Request.QueryString("id"))
+lcVerb = Request.GetHttpVerb()
+
+if (lcVerb == "POST" or lcVerb == "PUT")
+   RETURN this.UpdateArtist(loArtist)   
+ENDIF   
+
+IF lcVerb = "DELETE"
+   loArtistBus = CREATEOBJECT("cArtist")   
+   RETURN loArtistBus.Delete(lnId)  && .T. or .F.
+ENDIF
 
 
+*** GET Operation code below
+IF lnId == 0
+  RETURN this.ErrorResponse("Invalid Artist Id","404 Not Found")  
+ENDIF
+
+loArtistBus = CREATEOBJECT("cArtist")
+IF !loArtistBus.Load(lnId)   
+    RETURN this.ErrorResponse("Artist not found.","404 Not Found")
+ENDIF 
+
+*** Lazy load the albums
+loArtistBus.LoadAlbums()
+
+Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,albumPk, artistPk,songName,unitPrice,"
+
+return loArtistBus.oData 
+```
+
+So if the request is a `GET` request, the code on the bottom runs which retrieves and returns an Artist instance. On `POST` or `PUT` the `UpdateArtist()` method I showed in the last section is called.
+
+Finally there's also inline logic for deleting an Artist using the `DELETE` verb.
+
+> HTTP Verb overloading is a common concept in REST - you use nouns (ie. Artist) in the URL to describe a thing or operation, and a verb (`GET`, `POST`) to describe what to do to it. The combination of the two - **URL + HTTP Verb - make up the unique endpoint**.
+
+#### Server Error Handling
+No discussion of services is complete without giving some thoughts to error handling. Incidentally this is one of my pet peeves because there are plenty of services out there that do a horrible job of error handling, not providing decent error information back to the client.
+
+It's important that your application provides meaningful error information. There are a number of things that can be returned to let the client know what's going on:
+
+* HTTP Status Codes 
+    * 200's success
+    * 300's forwarding
+    * 400's Authorization, Not Found, Invalid etc.
+    * 500's errors
+* Error Response JSON
+
+Status codes should be the first line of response. If you have an authorization request that fails, a `401 Not Authorized` response is appropriate. If a resource is not found a `404 Not Found` should be returned. On the client these show as errors but offer a quick way to know what went wrong. If your application crashes while processing it should return a `500 Server Error` response.
+
+If you can it's also useful to return an error response from a request that **provides error information in a consistent manner**. I like to return a consistent error structure that includes an `isError` property, and a `message` property at minimum and then add additional fields as needed. For example, in debug I might want to send a stack trace so I can tell where the code failed.
+
+Web Connection REST automatically handles a number error scenarios automatically in the `wwRestProcess` class. If you access an invalid URL it automatically returns a `404 Not Found` error. If automatic authentication in Web Connection fails it automatically sends a `401 Unauthorized`. And any hard failures in your method code that aren't trapped return a `500 Server Error` result. All of these failures also return a JSON error object.
+
+To check this out lets break some code. For this to work we have to make sure Web Connection's `Server.lDebugMode = .F.` (or via UI configuration) or else any error will break into the source code.
+
+If I change the `Artists()` method to include an invalid method call which is a 'generic application error' like this:
+
+```foxpro
+FUNCTION Artists()
+
+loArtistBus = CREATEOBJECT("cArtist")
+lnArtistCount = loArtistBus.GetAArtistList()
+
+Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,"
+
+RETURN "cursor:TArtists"
+ENDFUNC
+```
+
+I get the following error response:
+
+![](ErrorResponse.png)
+
+Notice the response is `500 Server Error` and I get the FoxPro error message in the JSON response. Any error that occurs in your method basically triggers a 500 response. This is a good way to ensure unhandled errors provide some feedback rather than just a server error page.
+
+You can also explicitly force an error response. There are two ways to do this:
+
+* Simple call `ERROR "<lcErrorMessage>"`
+* `THIS.ErrorResponse()`
+
+The `ERROR` call is handled the same way as an unhandled exception except it uses your error message. The `ErrorResponse()` method allows you to specify a message as well as a status code. So rather than always returning a generic `500` response you can be more specific about the result code. Many errors are of the `404 Not Found` kind or `204 No Content`. You can [find HTTP status codes here](https://www.restapitutorial.com/httpstatuscodes.html).
+
+With that in mid let's pretend we have a problem loading the Artist list and return an error to the client:
+
+```foxpro
+FUNCTION Artists()
+
+loArtistBus = CREATEOBJECT("cArtist")
+lnArtistCount = loArtistBus.GetArtistList()
+
+IF .T.  && lnArtistCount < 0
+    * ERROR "Couldn't retrieve artists"   && 500 error
+    THIS.ErrorResponse("Couldn't retrieve artists","404 Not Found")
+    RETURN
+ENDIF
+
+Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,"
+
+RETURN "cursor:TArtists"
+ENDFUNC
+```
+
+#### CORS for Web Browser Access
+If you're building Web Server APIs that are going to be accessed directly by a Web Browser, you need to set up CORS (Cross Origin Resource Sharing) on the server. CORS is a URL restriction protocol that the server provides and the client checks to see whether the server allows the client's origin domain to connect and retrieve data from the server. This is a crazy double blind backwards protocol, that is enforced solely by browsers and totally useless for any other HTTP client. However, browsers **require a server CORS host policy** in order to allow connecting to a non-local Web site for `fetch` or `XHR` requests.
+
+In Web Connection CORS can be enabled with the following code in a `wwProcess` class' `InitProcess()` method:
+
+```foxpro
+FUNCTION OnProcessInit
+LOCAL lcOrigin, lcVerb
+
+*** Explicitly specify that pages should encode to UTF-8 
+*** Assume all form and query request data is UTF-8
+Response.Encoding = "UTF8"
+Request.lUtf8Encoding = .T.
+
+lcOrigin = Request.ServerVariables("HTTP_ORIGIN")
+IF !EMPTY(lcOrigin)
+	*!*	*** Add CORS header to allow cross-site access from other domains/mobile devices on Ajax calls
+	*!*	Response.AppendHeader("Access-Control-Allow-Origin","*")   && all domains always
+	Response.AppendHeader("Access-Control-Allow-Origin",lcOrigin)  && requested domain - effectively all
+	Response.AppendHeader("Access-Control-Allow-Methods","POST, GET, DELETE, PUT, OPTIONS")
+	Response.AppendHeader("Access-Control-Allow-Headers","Content-Type, *")
+	*** Allow cookies and auth headers
+	Response.AppendHeader("Access-Control-Allow-Credentials","true")
+ENDIF
+
+ 
+ *** CORS headers are requested with OPTION by XHR clients. OPTIONS returns no content
+lcVerb = Request.GetHttpVerb()
+IF (lcVerb == "OPTIONS")
+   *** Just exit with CORS headers set
+   *** Required to make CORS work from Mobile devices
+   RETURN .F.
+ENDIF   
+
+RETURN .T.
+```
+
+This explicitly allows access to all 'origins' which are essentially domains. The 'origin' is a base URL from a source site that is typically sent by a client browser when making `fetch()` or `XmlHttpRequest` HTTP calls to a non-native domain. So if I'm running on `west-wind.com` and I want to call an API on `foxcentral.net` from a browser, CORS policy has to explicitly allow `https://west-wind.com` access. You can specify either a comma delimited list of domain, or a wildcard that allows all domains using `*` as I'm doing above. 
+
+Note that this policy is a browser security feature and only applies to Web browser calls to non-local domains. It has no effect on a FoxPro HTTP client for example, but the server has to send these headers regardless to ensure that Web clients can consume the data.
 
 
+## Summary
+Alright, in this article I've shown you both how to call JSON REST services from FoxPro and how to create JSON REST services with FoxPro code. API Services are very powerful and give you a lot of options for publishing data in a fairly easy to create fashion. JSON as a message format is a great tool as it is relatively easy to create and parse in FoxPro. It has none of the complications that XML and SOAP suffered from - there's no ambiguity about the simple types that JSON provides. 
+
+HTTP tools on the client are available on just about any platforms - often with many options. On Windows you can use raw WinHttp() calls, use .NET for passthrough HTTP calls, or if you want more control a full featured library like `wwHttp` can offer a number of nice helper features to make it easy to send and receive content between client and server.
+
+You can also create REST services fairly easily using any of the existing Web server solutions that you might already be using. Because JSON is a fairly simple format to create and parse, any existing solution can provide REST functionality with a little manual work, or you can use a ready made framework like the `wwRestProcess` class in Web Connection that abstracts the entire process for you and turns REST endpoints into simple methods with an input parameter and result value.
+
+REST is no longer new technology, but it's had staying power and there doesn't appear to be anything set to replace it in the foreseeable future. Part of this is because the simplicity of the tech just works and easy to implement.  There are many patterns like Micro Services, Serverless Computing, and countless Cloud Services that are all just slight variations of the REST service technology. These approaches are here to stay and building on them both provides benefits in usage, as well as 
+
+## Resources
+
+### Links
+
+* [Samples and Documents](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/tree/main/FoxPro/WebConnectionServer/MusicStore/deploy/Data) (GitHub)
+* [AlbumViewer Web Site](https://albumviewer.west-wind.com)  (.NET Core site and API)
+
+### Tools and Libraries
+
+* [West Wind Web Connection](https://webconnection.west-wind.com)
+* [West Wind Client Tools](https://client-tools.west-wind.com)
+* [West Wind Web Surge](https://websurge.west-wind.com)
+* [Postman](https://www.postman.com/)
+* [JSONView Chromium Addin](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc)
 
 
+<div style="margin: 30px 0;font-size: 0.8em;
+            border-top: 1px solid #eee;padding-top: 8px;padding-bottom: 30px">
+    <img src="https://markdownmonster.west-wind.com/favicon.png"
+         style="height: 20px;float: left; margin-right: 10px;"/>
+    this article created and published with the 
+    <a href="https://markdownmonster.west-wind.com" 
+       target="top">Markdown Monster Editor</a> 
+</div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## ### What about SOAP? ###
-For many years since the late 1990's into the early 2010's, SOAP has been the predominant 'Service Protocol' used for creating Internet based services. SOAP uses XML based messages using a **SOAP Envelope** that contains both the data and processing instructions such as routing, security and more.
-
-While SOAP was initially a simple protocol, over the years a lot of additional functionality was piled on top of the initial standard. 
-
-XML itself is not a particularly great data transfer format because it's essentially text based. In order to provide 'type' information additional information in the form of XML Schema is required to determine what each XML element's conversion to a data type looks like. This separate schema from data approach along with many types that aren't easily supported by tools like FoxPro caused many data translation hassles trying to match data to a schema and interpreting complex structures correctly. 
-
-Additionally pure SOAP got ursurped by later WS* standards which piggy-backed additional services on top of SOAP. Many of these security based transport layer features were often abused and very difficult to 'get right' when using a service with differences in interpretation between platforms and tools. Most 'Enterprise' services I've worked with often took days just to get an initial document transferred usually because of differences in interpretation of both the data schema and the WS* security specifications. Today SOAP is still in heavy use in Enterprises that tend to over-engineer solutions.
-
-When REST started to gain momentum in the early 2010's, the reason for it was primarily to replace the absurdity that SOAP had turned into and bring back some of the simplicity that SOAP also promised at its inception. REST basically replaces most of SOAP's problematic issues, with simpler solutions based on readily available built-in protocols provided by HTTP and JSON.
-
-<style>
-table { margin: 2em 0; max-width: 900px; }
-td:first-child { width: 50%; }
-</style>
-
-| SOAP                                                        | REST                                      |
-|-------------------------------------------------------------|-------------------------------------------|
-| Uses many different Protocols                               | Uses only HTTP                            |
-| For HTTP only uses POST requests                            | Uses all HTTP Verbs                       |
-| Uses XML as Transfer Protocol                               | Uses JSON                                 |
-| Embeds Security into the Message                            | Uses HTTP (TLS) for Security              |
-| Embeds method routing in the Message | Uses HTTP Urls and Verbs Routing          |
-| Requires Schema for XML Serialization                       | JSON can be serialized based on structure |
-
-
-It all boils down to REST being considerably simpler to consume and create services for than SOAP. JSON makes for easier data creation and parsing, HTTP level features replace much of the complexity of the SOAP Envelope protocol and transport layers unambiguously, and you don't need special tools to create and parse SOAP messages but rather can use a simple HTTP client and JSON parser.

@@ -6,5 +6,5 @@ CENTURY=ON
 STRICTDATE=0
 MEMOWIDTH=150
 _vfpstart=
-PATH=C:\WEBCONNECTION\FOX\classes;C:\WEBCONNECTION\FOX\;C:\WEBCONNECTION\FOX\tools;C:\WEBCONNECTION\FOX\samples\wwdemo
+PATH=\wconnect\classes;\wconnect\;\wconnect\tools;\wconnect\samples\wwdemo
 COMMAND=do wcstart

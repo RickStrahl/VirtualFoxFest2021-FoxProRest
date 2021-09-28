@@ -61,39 +61,30 @@ LOCAL THIS as MusicStoreProcess OF MusicStoreProcess.prg
 *********************************************************************
 FUNCTION OnProcessInit
 
-*!* LOCAL lcScriptName, llForceLogin
-*!*	THIS.InitSession("MyApp")
-*!*
-*!*	lcScriptName = LOWER(JUSTFNAME(Request.GetPhysicalPath()))
-*!*	llIgnoreLoginRequest = INLIST(lcScriptName,"default","login","logout")
-*!*
-*!*	IF !THIS.Authenticate("any","",llIgnoreLoginRequest) 
-*!*	   IF !llIgnoreLoginRequest
-*!*		  RETURN .F.
-*!*	   ENDIF
-*!*	ENDIF
-
 *** Explicitly specify that pages should encode to UTF-8 
 *** Assume all form and query request data is UTF-8
 Response.Encoding = "UTF8"
 Request.lUtf8Encoding = .T.
 
 
-*** Add CORS header to allow cross-site access from other domains/mobile devices on Ajax calls
-*!* Response.AppendHeader("Access-Control-Allow-Origin","*")
-*!* Response.AppendHeader("Access-Control-Allow-Origin",Request.ServerVariables("HTTP_ORIGIN"))
-*!* Response.AppendHeader("Access-Control-Allow-Methods","POST, GET, DELETE, PUT, OPTIONS")
-*!* Response.AppendHeader("Access-Control-Allow-Headers","Content-Type, *")
-*!* *** Allow cookies and auth headers
-*!* Response.AppendHeader("Access-Control-Allow-Credentials","true")
-*!* 
-*!* *** CORS headers are requested with OPTION by XHR clients. OPTIONS returns no content
-*!*	lcVerb = Request.GetHttpVerb()
-*!*	IF (lcVerb == "OPTIONS")
-*!*	   *** Just exit with CORS headers set
-*!*	   *** Required to make CORS work from Mobile devices
-*!*	   RETURN .F.
-*!*	ENDIF   
+
+lcOrigin = Request.ServerVariables("HTTP_ORIGIN")
+IF !EMPTY(lcOrigin)
+	*!*	*** Add CORS header to allow cross-site access from other domains/mobile devices on Ajax calls
+	*!*	Response.AppendHeader("Access-Control-Allow-Origin","*")   && all domains always
+	Response.AppendHeader("Access-Control-Allow-Origin",lcOrigin)  && requested domain - effectively all
+	Response.AppendHeader("Access-Control-Allow-Methods","POST, GET, DELETE, PUT, OPTIONS")
+	Response.AppendHeader("Access-Control-Allow-Headers","Content-Type, *")
+	*** Allow cookies and auth headers
+	Response.AppendHeader("Access-Control-Allow-Credentials","true")
+ENDIF
+ *** CORS headers are requested with OPTION by XHR clients. OPTIONS returns no content
+lcVerb = Request.GetHttpVerb()
+IF (lcVerb == "OPTIONS")
+   *** Just exit with CORS headers set
+   *** Required to make CORS work from Mobile devices
+   RETURN .F.
+ENDIF   
 
 RETURN .T.
 ENDFUNC
@@ -189,6 +180,11 @@ FUNCTION Artists()
 
 loArtistBus = CREATEOBJECT("cArtist")
 lnArtistCount = loArtistBus.GetArtistList()
+
+IF lnArtistCount < 0
+    THIS.ErrorResponse("Couldn't retrieve artists","404 Not Found")
+    RETURN
+ENDIF
 
 Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,"
 

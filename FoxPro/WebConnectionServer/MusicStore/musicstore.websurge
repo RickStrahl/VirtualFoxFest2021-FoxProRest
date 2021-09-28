@@ -1,29 +1,35 @@
 GET /Artists.ms HTTP/1.1
 Accept-Encoding: gzip,deflate
 Accept: application/json
+User-Agent: West Wind HTTP .NET Client
 Websurge-Request-Name: Artist List
 
 ------------------------------------------------------------------
 
-GET /Artist.ms?id=1 HTTP/1.1
+GET /Artist.ms?id=2 HTTP/1.1
 Accept-Encoding: gzip,deflate
 Websurge-Request-Name: Get single artist
 
 ------------------------------------------------------------------
 
+GET /Artist.ms?id=991 HTTP/1.1
+Accept-Encoding: gzip,deflate
+Websurge-Request-Name: Get single artist (Not Found)
+
+------------------------------------------------------------------
+
 POST /artist.ms HTTP/1.1
 Accept-Encoding: gzip,deflate
-Content-Type: application/json
 Accept: application/json
+Content-Type: application/json
 Websurge-Request-Name: Update Artist
 
 {
-  "pk": 1,
-  "artistName": "AC/DC",
-  "descript": "AC/DC's mammoth power chord roar became one of the most influential hard rock sounds of the '70s. In its own way, it was a reaction against the pompous art rock and lumbering arena rock of the early '70s. AC/DC's rock was minimalist -- no matter how huge and bludgeoning their guitar chords were, there was a clear sense of space and restraint. Combined with Bon Scott's larynx-shredding vocals, the band spawned countless imitators over the next two decades and enjoyed commercial success well into the 2000s.",
-  "imageUrl": "http://cps-static.rovicorp.com/3/JPG_400/MI0003/090/MI0003090436.jpg?partner=allrovi.com",
-  "amazonUrl": "http://www.amazon.com/AC-DC/e/B000AQU2YI/?_encoding=UTF8&camp=1789&creative=390957&linkCode=ur2&qid=1412245004&sr=8-1&tag=westwindtechn-20&linkId=SSZOE52V3EG4M4SW",
-  "albumCount": 1
+  "pk": 2,
+  "artistName": "Accept",
+  "descript": "With their brutal, simple riffs and aggressive, fast tempos, Accept were one of the top metal bands of the early '80s, and a major...",
+  "imageUrl": "http://cps-static.rovicorp.com/3/JPG_400/MI0001/389/MI0001389322.jpg?partner=allrovi.com",
+  "amazonUrl": "http://www.amazon.com/Accept/e/B000APZ8S4/?_encoding=UTF8&camp=1789&creative=390957&linkCode=ur2&qid=1412245037&sr=8-3&tag=westwindtechn-20&linkId=KM4RZR3ECUXWBJ6E"
 }
 
 ------------------------------------------------------------------
