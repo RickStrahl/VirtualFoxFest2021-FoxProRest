@@ -1,6 +1,7 @@
 # Building and Consuming REST Services with Visual FoxPro
 
-*Virtual FoxFest 2021 Presentation*
+*Virtual FoxFest 2021 Presentation*  
+*by Rick Strahl*
 
 
 ## Session Description
@@ -25,7 +26,7 @@ You will learn:
 ## Documents
 
 * [White Paper PDF](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/blob/main/Documents/Strahl_FoxProAndREST.pdf)
-* [White Paper HTML](https://htmlpreview.github.io/?https://raw.githubusercontent.com/RickStrahl/VirtualFoxFest2021-FoxProRest/main/Documents/Strahl_FoxProAndREST.html) <small>([download](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/raw/main/Documents/Strahl_FoxProAndREST.html))</small>
+* [White Paper HTML](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/blob/main/Documents/Markdown/FoxProAndREST.md) 
 * [Slides](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/raw/main/Documents/Strahl_FoxProREST.pptx)
 
 ## Source Code
@@ -37,7 +38,11 @@ You can start up FoxPro in the root folder, then run the examples in the `Client
 This folder contains the full Web Connection project described in the Session/White Paper. You need to have a copy Web Connection (shareware version available) in order to run these examples. The `Readme.md` file has additional project configuration instructions.
 
 ## Follow up
-Have questions or comments? Come ask questions on the West Wind Message board in the `Conferences` or product specific forum, and 
+Have questions or comments? Come and have a discussion on the West Wind Message Board forum site. You can post in the **Conferences** section or the relevant product specific section (ie. West Wind Client Tools or Web Connection).
+
+* [West Wind Message Board Support Forum](https://support.west-wind.com)
+
+I'd love to hear from you!
 
 ## Contact 
 If you need more personalized support or guidance you can find more contact options for me here:
