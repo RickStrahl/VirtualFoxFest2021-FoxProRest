@@ -1,5 +1,12 @@
 # Building and Consuming REST Services with FoxPro
 
+<div style="margin: 1em 0 3em 0; font-size: 0.8em;">
+
+*by **Rick Strahl***  
+prepared for **Virtual FoxFest**, 2021
+
+</div>
+
 REST APIs, or Web Services that use plain HTTP requests and JSON have become the replacement for more complex SOAP based service architectures of the past. Most modern APIs available on the Web — from Credit Card Processors, to eCommerce back ends, to mail services, Cloud Provider APIs and Social Media data access —  all use REST services or variants thereof to make remote data available for remote interaction. 
 
 REST services tend to be much simpler to build and consume than SOAP, because they don't require any custom tooling as SOAP/WSDL services did. They use the HTTP protocol for sending requests over the Web, and typically use JSON's as their serialization format. JSON's simple type structure is inherently easier to create and parse into object structures from a language like FoxPro and REST's clear separation between the message (JSON) and the protocol layers (HTTP Headers/Protocol) reduces the amount of infrastructure that is required in order to use the technology.

@@ -379,23 +379,29 @@ xref {
 /* for PDF generation and print output */
 @media print {
     html, body {
-        font-family: "Segoe UI Emoji", "Apple Color Emoji", -apple-system, BlinkMacSystemFont,"Segoe UI", Helvetica, Helvetica, Arial, sans-serif;
+        font-family:  "Segoe UI",-apple-system, BlinkMacSystemFont, Helvetica, Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Apple Color Emoji";;
+        font-size: 17px;
         text-rendering: optimizeLegibility;
     }
     pre {
-    white-space: pre-wrap;
-    word-break: normal;
-    word-wrap: normal;
+      font-family: monospace;
+      font-size: 1.2em;
+      white-space: pre-wrap;
+      word-break: normal;
+      word-wrap: normal;
+      color: red;
    }
 
-        pre > code {
-            white-space: pre-wrap;
-            padding: 1em !important;
+  pre > code {
+      font-size: 1.2em;
+      white-space: pre-wrap;
+      padding: 1em !important;      
 
-            /* match highlightjs theme colors - must override for <code> override */
-            background: #1E1E1E;
-            color: #DCDCDC;
-        }
+      /* match highlightjs theme colors - must override for <code> override */
+      background: #1E1E1E;
+      /* color: #DCDCDC; */
+      color: goldenrod;
+  }
 }
 
 </code></style>
@@ -533,6 +539,10 @@ xref {
 <div id="MainContent">
   <!-- Markdown Monster Content -->
   <h1 id="building-and-consuming-rest-services-with-foxpro">Building and Consuming REST Services with FoxPro</h1>
+<div style="margin: 1em 0 3em 0; font-size: 0.8em;">
+<p><em>by <strong>Rick Strahl</strong></em><br>
+prepared for <strong>Virtual FoxFest</strong>, 2021</p>
+</div>
 <p>REST APIs, or Web Services that use plain HTTP requests and JSON have become the replacement for more complex SOAP based service architectures of the past. Most modern APIs available on the Web — from Credit Card Processors, to eCommerce back ends, to mail services, Cloud Provider APIs and Social Media data access —  all use REST services or variants thereof to make remote data available for remote interaction.</p>
 <p>REST services tend to be much simpler to build and consume than SOAP, because they don't require any custom tooling as SOAP/WSDL services did. They use the HTTP protocol for sending requests over the Web, and typically use JSON's as their serialization format. JSON's simple type structure is inherently easier to create and parse into object structures from a language like FoxPro and REST's clear separation between the message (JSON) and the protocol layers (HTTP Headers/Protocol) reduces the amount of infrastructure that is required in order to use the technology.</p>
 <p>Because of its simplicity REST can also be directly consumed by Web applications rather than going through a server proxy. JSON is a JavaScript native format (essentially an <em>object literal</em>) and so any JavaScript applications can easily consume REST services directly.</p>
