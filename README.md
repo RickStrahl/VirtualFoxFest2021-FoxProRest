@@ -3,7 +3,6 @@
 *Virtual FoxFest 2021 Presentation*  
 *by Rick Strahl*
 
-
 ## Session Description
 
 REST APIs or Services that use plain HTTP requests and JSON have become the de facto replacement for the more complex SOAP Based architectures of the past. Most modern APIs available on the Web—from Credit Card Processors, to E-Commerce backends, to Mail services and Social Media data access—use REST services or variants thereof like GraphQL to make their remote data available for interaction.

@@ -14,6 +14,8 @@ FXUResults.*
 web/**/*.prg
 web/**/*.fxp
 
+!FoxPro/classes/*.fxp
+FoxPro/classes/*.prg
 
 #Web Connection
 wwrequestlog.*

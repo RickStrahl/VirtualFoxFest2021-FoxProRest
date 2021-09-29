@@ -16,4 +16,3 @@ loArtists = loSer.Deserialize(lcJson)
 FOR	EACH loArtist IN loArtists FoxObject
 	? loArtist.ArtistName + " (" +  TRANSFORM(loArtist.AlbumCount) + ")"
 ENDFOR
-

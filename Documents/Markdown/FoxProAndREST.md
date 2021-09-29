@@ -28,7 +28,11 @@ I'll talk about both of these scenarios in the context of Visual FoxPro. We'll s
 But before the practical bits, let's talk about what REST is and what makes it unique and how it differs from what came before.
 
 ## So what is REST?
-Unlike older protocols like SOAP, . REST is not a specific standard or even a specification and it doesn't have a formal definition. There's no Web site that you can go to to look up how to specifically architect your HTTP Service. Rather it's a set of common *'recommendations'* or a *'style'* of building HTTP based Web Services based on the semantics of the HTTP protocol.
+
+> #### @icon-info-circle REST is not a specific standard
+> It's not a specification and it doesn't have a formal definition. There's no Web site that you can go to to look up how to specifically architect your HTTP Service.
+>
+> Rather it's a set of common **recommendations** or a **style** of building HTTP based Web Services based on the semantics of the HTTP protocol.
 
 Officially REST stands for **Representational State Transfer** which is a fairly cryptic term to describe what amounts to Web based APIs. The idea behind the term is that you have fixed URLs from which you can transfer state - or data - back and forth between a client and server. 
 
@@ -301,7 +305,7 @@ lcJson =  loSer.Serialize(loCust)
 loCust2 = loSer.DeserializeJson(lcJson)
 
 ? loCust2.Name
-? loCust2.Entered
+    ? loCust2.Entered
 ? loCust2.Address.Street 
 ? loCust2.Number
 ```
@@ -320,7 +324,7 @@ This creates JSON like this:
 }
 ```
 
-### Simple Values
+#### Simple Values
 JSON has literal values for simple types and you can serialize and deserialize these simple values.
 
 ```foxpro  
@@ -1744,9 +1748,16 @@ REST is no longer new technology, but it's had staying power and there doesn't a
 * [Postman](https://www.postman.com/)
 * [JSONView Chromium Addin](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc)
 
+**JSON Serializers**
+
+* [wwJsonSerializer](https://webconnection.west-wind.com/docs/_1wu18owba.htm) (West Wind Tools)
+* [nfJson](https://github.com/VFPX/nfJson)
+
+**HTTP Clients**
+* [wwHttp]()
 
 <div style="margin: 30px 0;font-size: 0.8em;
-            border-top: 1px solid #eee;padding-top: 8px;padding-bottom: 30px">
+            border-top: 1px solid #eee;padding-top: 8px; padding-bottom: 30px">
     <img src="https://markdownmonster.west-wind.com/favicon.png"
          style="height: 20px;float: left; margin-right: 10px;"/>
     this article created and published with the 

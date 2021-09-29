@@ -4,8 +4,9 @@ DO wwJsonSerializer
 
 loHttp = CREATEOBJECT("wwhttp")
 lcJson = loHttp.Get("https://albumviewer.west-wind.com/api/Artist/33")
+
 *? lcJson
-ShowJson(lcJson)
+*ShowJson(lcJson)
 
 loSer = CREATEOBJECT("wwJsonSerializer")
 loArtist = loSer.Deserialize(lcJson)
