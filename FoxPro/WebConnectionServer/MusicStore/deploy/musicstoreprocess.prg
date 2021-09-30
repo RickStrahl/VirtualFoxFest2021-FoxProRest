@@ -418,7 +418,27 @@ ENDFUNC
 *   DeleteAlbum
 
 
+************************************************************************
+*  Authenticate
+****************************************
+***  Function:
+***    Assume:
+***      Pass:
+***    Return:
+************************************************************************
+FUNCTION Authenticate(loUser)
+LOCAL loAuthBus, lcToken, loResult
 
+loAuthBus = CREATEOBJECT("cAuth")
+loTokenResult = loAuthBus.AuthenticateAndIssueToken(loUser.Username, loUser.Password)
+IF ISNULL(loTokenResult)
+   this.ErrorResponse(loAuthBus.cErrorMsg,"401 Unauthorized")
+   RETURN
+ENDIF
+
+RETURN loTokenResult
+ENDFUNC
+*   Authenticate
 
 
 ENDDEFINE

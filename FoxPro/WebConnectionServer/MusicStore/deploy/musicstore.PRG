@@ -588,6 +588,52 @@ ENDDEFINE
 * ctrack
 
 
+*************************************************************
+DEFINE CLASS cAuth AS wwBusinessObject
+*************************************************************
+*: Author: Rick Strahl
+*:         (c) West Wind Technologies, 2021
+*:Contact: http://www.west-wind.com
+*:Created: 9/29/2021
+*************************************************************
+
+*** Custom Properties
+
+*** Stock Properties
+
+
+************************************************************************
+*  Authenticate
+****************************************
+***  Function:
+***    Assume:
+***      Pass:
+***    Return:
+************************************************************************
+FUNCTION AuthenticateAndIssueToken(lcUsername, lcPassword)
+
+IF EMPTY(lcUsername) OR EMPTY(lcPassword)
+   this.SetError("Username or password can't be empty.")
+   RETURN NULL
+ENDIF
+   
+*** Validate here with real logic   
+IF lcUsername == "test" AND lcPassword == "test"
+   loToken = CREATEOBJECT("EMPTY")
+   ADDPROPERTY(loToken, "token", GetUniqueId() )
+   ADDPROPERTY(loToken, "isCallbackError", .F.)
+   RETURN loToken	
+
+ENDIF
+
+this.SetError("Invalid Username or password")
+RETURN null
+ENDFUNC
+*   Authenticate
+
+
+ENDDEFINE
+*EOC cAuth 
 
 FUNCTION MsToTime(lnMs)
 

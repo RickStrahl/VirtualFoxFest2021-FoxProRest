@@ -694,19 +694,6 @@ lcJson = loSer.Serialize(loUser)
 loHttp.cContentType = "application/json"
 lcJson = loHttp.Post("https://albumviewer.west-wind.com/api/Authenticate", lcJson)
 
-*** Check for errors
-IF loHttp.nError # 0
-   ? "Failed: " + loHttp.cErrorMsg
-ENDIF
-IF loHttp.cResultCode = "401"
-   ? "Login failed. Invalid credentials"
-   RETURN
-ENDIF   
-IF loHttp.cResultCode # "200"
-   ? "Failed: " + loHttp.cResultCode + "  " + loHttp.cResultCodeMessage
-   RETURN
-ENDIF   
-
 *** Deserialize the returned Object
 loAuth = loSer.Deserialize(lcJson)
 
@@ -1336,6 +1323,23 @@ Here's the `Artists` request - and the others we'll create - in [WebSurge](https
 
 ![](ArtistListWebSurge.png)
 
+#### A simple POST Request that Accepts data
+The next example is another simple one that Authenticates a user. It takes a single object input with an object that provides the user's credentials for authentication:
+
+```foxpro
+************************************************************************
+FUNCTION Authenticate(loUser)
+****************************************
+loAuthBus = CREATEOBJECT("cAuth")
+loTokenResult = loAuthBus.AuthenticateAndIssueToken(loUser.Username, loUser.Password)
+IF ISNULL(loTokenResult)
+   this.ErrorResponse(loAuthBus.cErrorMsg,"401 Unauthorized")
+   RETURN
+ENDIF
+
+RETURN loTokenResult
+```
+
 #### Object Composition: Retrieving an individual Artist
 The previous request was a simple list result with flat objects. But you can also return much more complex structures that nest multiple objects and collections to createa 
 
@@ -1754,7 +1758,8 @@ REST is no longer new technology, but it's had staying power and there doesn't a
 * [nfJson](https://github.com/VFPX/nfJson)
 
 **HTTP Clients**
-* [wwHttp]()
+* [wwHttp](https://webconnection.west-wind.com/docs/_0jj1abf2k.htm)
+* [Simple WinHttp Client](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/blob/main/FoxPro/Client/winhttp.PRG)
 
 <div style="margin: 30px 0;font-size: 0.8em;
             border-top: 1px solid #eee;padding-top: 8px; padding-bottom: 30px">
