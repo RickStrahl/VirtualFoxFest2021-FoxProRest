@@ -1594,8 +1594,8 @@ IF lcVerb = "DELETE"
    RETURN loArtistBus.Delete(lnId)  && .T. or .F.
 ENDIF
 
-
 *** GET Operation code below
+
 IF lnId == 0
   RETURN this.ErrorResponse("Invalid Artist Id","404 Not Found")  
 ENDIF
@@ -1674,13 +1674,11 @@ FUNCTION Artists()
 loArtistBus = CREATEOBJECT("cArtist")
 lnArtistCount = loArtistBus.GetArtistList()
 
-IF .T.  && lnArtistCount < 0
+IF  lnArtistCount < 0
     * ERROR "Couldn't retrieve artists"   && 500 error
     THIS.ErrorResponse("Couldn't retrieve artists","404 Not Found")
     RETURN
 ENDIF
-
-Serializer.PropertyNameOverrides = "artistName,imageUrl,amazonUrl,albumCount,"
 
 RETURN "cursor:TArtists"
 ENDFUNC
