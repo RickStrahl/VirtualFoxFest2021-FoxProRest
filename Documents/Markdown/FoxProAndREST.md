@@ -3,29 +3,34 @@
 <div style="margin: 1em 0 3em 0; font-size: 0.8em;">
 
 *by **Rick Strahl***  
-prepared for **Virtual FoxFest**, 2021
+*prepared for **Virtual FoxFest**, 2021*
 
 </div>
 
-REST APIs, or Web Services that use plain HTTP requests and JSON have become the replacement for more complex SOAP based service architectures of the past. Most modern APIs available on the Web — from Credit Card Processors, to eCommerce back ends, to mail services, Cloud Provider APIs and Social Media data access —  all use REST services or variants thereof to make remote data available for remote interaction. 
+![](RESTing.jpg)
 
-REST services tend to be much simpler to build and consume than SOAP, because they don't require any custom tooling as SOAP/WSDL services did. They use the HTTP protocol for sending requests over the Web, and typically use JSON's as their serialization format. JSON's simple type structure is inherently easier to create and parse into object structures from a language like FoxPro and REST's clear separation between the message (JSON) and the protocol layers (HTTP Headers/Protocol) reduces the amount of infrastructure that is required in order to use the technology.
+REST APIs, or Web Services that use plain HTTP requests and JSON, have largely become the replacement for more complex SOAP based service architectures of the past. Most **modern APIs** available on the Web — from Credit Card Processors, to eCommerce back ends, to mail services, Cloud Provider APIs and Social Media data access —  all use REST services or variants thereof to make remote data available for remote interaction. 
 
-Because of its simplicity REST can also be directly consumed by Web applications rather than going through a server proxy. JSON is a JavaScript native format (essentially an *object literal*) and so any JavaScript applications can easily consume REST services directly.
+REST services tend to be much simpler to build and consume than SOAP, because they don't require any custom tooling as SOAP/WSDL services did. They use the HTTP protocol for sending requests over the Web, and typically use JSON as their serialization format. JSON's simple type structure is inherently easier to create and parse into object structures, especially from languages like FoxPro. REST's clear separation between the message (JSON) and the protocol layers (HTTP Headers/Protocol) reduces the amount of infrastructure that is required in order to use the technology.
 
-This makes REST useful for double duty both as a remote data service API and a backend for internal SPA type Web applications. Often these two tasks can overlap, with applications exposing both the Web application for interactive Web and App use, and a service for remote data API access. Many big services like Twitter, Facebook and Cloud Providers like Azure use APIs to drive their front ends while also exposing those same APIs for remote access.
+Because of its simplicity REST can also be directly consumed by Web applications rather than going through a server proxy. JSON is a JavaScript native format (essentially an *object literal*) and so any JavaScript applications can easily consume REST services directly. Most languages or platforms also have efficient JSON serializers that make it easy to create and parse JSON from native data structures.
 
+This makes REST useful for double duty both as a **remote data service API** as well as a backend for **internal SPA Web applications**. Often these two tasks can overlap, with applications exposing both the Web application for interactive Web and App use, and a service for remote data API access. Many big services like Twitter, Facebook and Cloud Providers like Azure use APIs to drive their front ends while also exposing those same APIs for remote access.
+
+### Simple, Distributed Concepts
 One of the big reasons of REST's popularity and success in recent years is its simplicity: All you need to consume a REST Service is an HTTP Client and a JSON parser. On the server too no special tools are required beyond a Web Server and the ability to capture HTTP requests and write HTTP responses which means that its easy to create REST service endpoints manually, and there are lots of support frameworks to choose from to provide automated REST service integrations.
 
-## Client and Server
-For this article there are two scenarios that you're going to deal with when it comes to REST Services:
+And because the technology is inherently distributed, you can swap the front end and backend independently of each other: The backend doesn't care that the front is not written in the same language, so you can have a .NET backend and FoxPro or JavaScript front end. In fact you can use many different kinds of applications to connect to a single back end. Desktop applications, phone apps, browsers may all use completely separate front ends and technologies to connect to the same API.
 
-* Consuming REST Services
-* Creating Server APIs using REST Services
+### Client and Server
+For this article and the FoxPro relevant focus, there are two scenarios that I'm going to focus on when it comes to REST Services:
+
+* Consuming REST Services using FoxPro
+* Creating Server APIs using REST Services with FoxPro
 
 I'll talk about both of these scenarios in the context of Visual FoxPro. We'll start with retrieving some data from an HTTP service and consuming it in FoxPro, and then jump to the other end and create a REST JSON service on the server side using [Web Connection](https://webconnection.west-wind.com). 
 
-But before the practical bits, let's talk about what REST is and what makes it unique and how it differs from what came before.
+But before jumping into the code examples, let's talk about what REST is and what makes it unique related to what came before.
 
 ## So what is REST?
 
@@ -40,21 +45,25 @@ Since there isn't a fixed standard you can look at, here's Wikipidia's broad def
 
 > Representational state transfer (REST) is a software **architectural style** that was created to guide the design and development of the architecture for the World Wide Web. REST defines a **set of constraints** for how the architecture of an Internet-scale distributed hypermedia system, such as the Web, should behave. The REST architectural style emphasizes the scalability of interactions between components, uniform interfaces, independent deployment of components, and the creation of a layered architecture to facilitate caching components to reduce user-perceived latency, enforce security, and encapsulate legacy systems.
 
-This is pretty vague and open to interpretation with words like **architectual style** and **general set of constraints**. There's nothing specific about this 'recommendation', other than it uses the HTTP protocol to access and send data.
+This is pretty vague and open to interpretation with words like *architectual style* and *general set of constraints*. There's nothing specific about this 'recommendation', other than it uses the HTTP protocol and its semantics to access and send data using a few common sense recommendations.
+
+> If you want to dig into the origin of REST, the original was coined in 2000 by [Roy Fielding's orginal dissertation](http://www.ics.uci.edu/~fielding/pubs/dissertation/evaluation.htm) that started off the REST movement. Be warned it's a dry and pretty non-comittal read.
 
 ## REST is all about HTTP
 REST is all about taking maximum advantage of the HTTP Web protocol. 
 
-HTTP is the protocol used to communicate on the Web. HTTP traditionally has been the protocol of Web Browsers, but more recently the use of Web APIs increasingly sees HTTP use by applications using HTTP client software either built into frameworks or tools.
+HTTP is the protocol used to communicate on the Web. HTTP traditionally has been the protocol of Web Browsers, but more recently the use of Web APIs increasingly sees HTTP used by applications using native HTTP client software either built into languages, frameworks or tools.
 
-HTTP is very prominently used in today's modern applications even outside of the context of traditional Web applications: You see APIs used heavily these days in native Mobile apps as well as many desktop applications.
+HTTP is very prominently used in today's modern applications even outside of the context of traditional Web applications: You see APIs used heavily in native Mobile apps and many desktop applications.
 
-The HTTP protocol is used to send and retrieve data in a simple, one-way transactional manner: A request is made with headers and content, and a response is returned also with headers and content. 
+### HTTP: Same as it ever was
+The HTTP protocol is used to send and retrieve data in a simple, one-way transactional manner: A request is made with headers and content, and a response is returned also with headers and content. It's still the nearly same stateless, distributed protocol that was originally created in the early 1990's.
 
-Requests only go one way from the client to the server. While the server can return data from in response to a request, it cannot independently call back to the client outside of an incoming request context. There are other ways to do this namely using Web Sockets that are built on top of HTTP, but that's a separate protocol and not applicable to REST.
+Requests only **go one way from the client to the server**. While the server can return data from in response to a request, it **cannot independently call back to the client**. There are other ways to do this namely using *Web Sockets* that are built on top of HTTP, but that's a separate protocol and not applicable to REST.
 
-Finally it's important to remember that HTTP is inherently stateless - each request has to provide its own context to the server as each request opens and closes a connection to the server. There's no explicit persistent state across requests unless some mechanism like HTTP Cookies or custom headers are used between requests. It's unusual though to use these mechanisms for APIs - API clients tend to keep state in the context of the application and then send it as part of the request or the request headers which most commonly includes authentication in the form of auth tokens.
+It's important to remember that **HTTP is inherently stateless** - each request has to provide its own context to the server as each request opens and closes a connection to the server. There's no explicit persistent state across requests unless some mechanism like HTTP Cookies or custom headers are used between requests. It's unusual though to use these mechanisms for APIs - API clients tend to keep state in the context of the application and then send it as part of the request or the request headers which most commonly includes authentication in the form of auth tokens.
 
+### Request and Response
 Here's what the HTTP Request and Response are made up of:
 
 **Request**
@@ -89,16 +98,14 @@ Here's what a real HTTP request looks like. This first example is a simple `GET`
 
 This particular request is an update operation that updates an Artist in a music store application. 
 
-The POST operation is different in that it uses the `POST` verb, and provides a content body that contains the JSON request data. The data sent can be raw data like a JSON or XML document, but can also be Urlencoded form data, a multipart form upload, raw binary data like PDF or Zip file... it can be anything. Whenever you send data to the server you have to specify a `Content-Type` so that the server knows how to handle the incoming data. Here the data is JSON so `Content-Type: application/json`.
+The POST operation is different in that it uses the `POST` verb, and provides a content body that contains the JSON request data. The data sent can be raw data like a JSON or XML document, but can also be urlencoded form data, a multi-part form upload, raw binary data like PDF or Zip file... it can be anything. Whenever you send data to the server you have to specify a `Content-Type` so that the server knows how to handle the incoming data. Here the data is JSON so `Content-Type: application/json`.
 
 The HTTP Headers provide protocol instructions and information such as the calling browser, what type of content is requested or optionally sent, and so on. Additionally you can also handle security via the `Authorization` header. This example uses a **Bearer Token** that was previously retrieved via a `Authentication` API call. Headers basically provide meta data: Data that describes the request, or additional data that is separate from the data in the content of a request.
 
 `POST` and `PUT` requests like also have a request body, which is raw data sent to the server. The data sent is serialized JSON of an Artist object to update the server with. 
 
 ### HTTP Advantages
-HTTP is a great mechanism for applications because it provides many features 'out of the box' that don't have to be implemented for each tool or application.
-
-Here are a few things that REST can take advantage of with HTTP:
+HTTP is a great mechanism for applications because it provides many features as part of the protocol, that don't have to be implemented for each tool or application.
 
 * API Routing via URL
 * Unique Resource Access via URL
@@ -108,7 +115,9 @@ Here are a few things that REST can take advantage of with HTTP:
 * Authorization via HTTP Authorization (+server auth support)
 * Meta Data via HTTP Headers
 
-### HTTP Routing plus HTTP Verbs
+#### HTTP Routing plus HTTP Verbs
+The *Representative* term in the REST moniker refers to the unique addressing mechanism of HTTP. A URL plus an HTTP Verb make for a **unique **endpoint** for a given HTTP request. 
+
 HTTP has an innate built-in unique routing mechanism based on URLs. Any URL by its nature is a unique identifier, so each endpoint you create via an HTTP API is always unique in combination with an HTTP Verb.
 
 A url like:
@@ -141,18 +150,18 @@ Of these `POST` and `PUT` are the only ones that support a content body to send 
 
 These verbs are **suggestions**. Requests are not going to fail if you update data via a `POST` operation instead of using the suggested `PUT` unless the server applications explicitly checks and rejects requests based on a verb. However, it's a good idea to follow these **suggestions** as best as possible for consistency, and easy understanding of your API and when necessary make them flexible so they just work. It'll make your API easier to use.
 
-### Encrypted Content via HTTPS
+#### Encrypted Content via HTTPS
 HTTP has built in support for `https://` which uses certificate based security keys for encrypting content between client and server. This encryption ensures that content on the wire is encrypted and can't be spied upon without access to the keys of the certificates on both sides of the connection. This avoids man in the middle attacks. To use `https://` encryption a server secure certificate is required but these days you can set up free LetsEncrypt Certificates on most Web servers in minutes. For Windows Server and IIS look at [Win-Acme](https://www.win-acme.com/) to set up Lets Encrypt certificates on IIS for free.
 
 The nice thing with `https://` is that it's part of the server infrastructure. As long as the server has a certificate, both client and server can use the `https://` protocol to securely access requests.
 
-### Resource Caching
+#### Resource Caching
 Each URL + Verb on an API endpoint is unique in the eyes of the browser and if you access the same resource using a read (ie. `GET`) operation, requests are cached on subsequent access by default. By default requests are expected to be idempotent which means that sending a request in the same way twice should always produce the same result. HTTP provides this functionality by default, but it can be overridden with specific HTTP headers that force the client to refresh data. This makes sense in some cases where data changes frequently.
 
-### Authorization and Authentication
+#### Authorization and Authentication
 HTTP doesn't have direct support for authentication besides the `Authorization` header that is commonly used by server frameworks to handle Authorization and Authentication. Most server frameworks today have some basic mechanisms for handling security built-in. Most Web Servers have support for Basic Authentication out of the box, IIS additionally has support for Windows Auth, and if you use an application framework like ASP.NET MVC or ASP.NET Core they also have built-in support for handling Cookie and Bearer token authentication as well as various federated frameworks.
 
-### Meta Data in HTTP Headers
+#### Meta Data in HTTP Headers
 Unlike SOAP, REST clearly separates the content from meta data that describes the request or response. So the content sent and returned tends to be truly application specific while anything that involves the request processing or tracking generally is handled in the headers of the request.
 
 Every request has a handful of required headers that are always sent by the client and are always returned by the server. These describe the basics of the request or response and include things like the content type, content-length, the accepted types of content, browser and so on. 
@@ -160,7 +169,9 @@ Every request has a handful of required headers that are always sent by the clie
 But beyond the auto-generated headers, you can also add custom headers of your own to both the client request and the server response. You should use headers to return data that is important to the application, but not directly part of the data. This could be cached state (similar to cookies) that you carry from request to request, or identifying information.
 
 ## Calling REST APIs from FoxPro
-Ok - enough theory let's kick the tires and use some RESTful APIs. Let's start with what's required to call a REST service from Visual FoxPro:
+Enough theory, let's kick the tires and consume some RESTful APIs from FoxPro.
+
+Let's start with some of the tools that are required to call a REST service from Visual FoxPro:
 
 * **HTTP Client**  
     * [wwHttp](https://webconnection.west-wind.com/docs/_0jj1abf2k.htm) (West Wind Tools)
@@ -173,7 +184,7 @@ Ok - enough theory let's kick the tires and use some RESTful APIs. Let's start w
     * [nfJson](https://github.com/VFPX/nfJson)
 
 ### Http Client
-There are a lot of options for HTTP access. I'm obviously biased towards the `wwHttp` library as that's what I usually use and as it provides full featured HTTP support for many different scenarios. That's what I'll use for the examples here and the support libraries are provided with the samples.
+There are a lot of options for HTTP access. I'm biased towards the `wwHttp` library, as that's what I usually use and as it provides full featured HTTP support for many different scenarios and that's what I'll use for the examples here. The support libraries are provided with the samples so you can run all the examples yourself.
 
 #### A simple WinHttp Client
 If you'd rather use a native tool without extra dependencies you can use **WinHttp** which is built into Windows. It has both Win32 and COM APIs. Using the COM API here's a very simplistic, generic HTTP client you can use instead of `wwHttp`:
@@ -223,9 +234,12 @@ You can use it with very simple code like this:
 
 ```foxpro
 SET PROCEDURE TO WinHttp ADDITIVE
+
+*** GET Request
 lcResult = WinHttp("https://albumviewer.west-wind.com/api/artist/1")
 ? PADR(lcResult,1000)
 
+*** POST Request
 TEXT TO lcJson NOSHOW
 {
   "username": "test",
@@ -240,7 +254,7 @@ lcResult = WinHttp("https://albumviewer.west-wind.com/api/authenticate","POST",;
 This is a pretty basic implementation. It needs additional error handling, dealing with binary data, progress handling and a few other things, but for starters it's a workable solution.
 
 #### wwHttp - A little Extra
-The `wwHttp` provides a lot more functionality out of the box. It supports a number of convenience helpers to make it easy to parse both content and headers, encode and decode content, progress events, handle Gzip/Deflate compression, binary content, status updates and more. A compiled version of `wwHttp` is provided with the samples.
+The `wwHttp` provides a lot more functionality out of the box. It supports a number of convenience helpers to make it easy to parse both content and headers, encode and decode content, progress events, handle Gzip/Deflate compression, binary content, status updates, consistent error handling and more. A compiled version of `wwHttp` is provided with the samples.
 
 Using the same service as above using `wwHttp` looks something like this:
 
@@ -248,9 +262,12 @@ Using the same service as above using `wwHttp` looks something like this:
 DO wwHttp  && load libraries
 
 loHttp = CREATEOBJECT("wwHttp")
+
+*** GET Request
 lcResult = loHttp.Get("https://albumviewer.west-wind.com/api/artist/1")
 ? PADR(lcResult,1200)
 
+*** POST Request
 TEXT TO lcJson NOSHOW
 {
   "username": "test",
@@ -274,7 +291,7 @@ ENDIF
 ```
 
 ### JSON Serialization and Parsing
-Next you need a JSON serializer that can turn your FoxPro objects into JSON, and turn JSON back into FoxPro objects, values or collections. I'm going to use `wwJsonSerializer` here since that's all I use, but there are other open source libraries available as well. The logic should be similar.
+Next you need a JSON serializer that can turn your FoxPro objects into JSON, and turn JSON back into FoxPro objects, values or collections. I'm going to use `wwJsonSerializer` here that's all I use, but there are other open source libraries available as well. The logic is similar.
 
 #### Objects, Values and Collections
 Using  `wwJsonSerializer` to turn a FoxPro object into a JSON looks something like this:
@@ -299,7 +316,6 @@ loSer = CREATEOBJECT("wwJsonSerializer")
 lcJson =  loSer.Serialize(loCust)
 
 ? lcJson
-
 
 *** read back from JSON into an object
 loCust2 = loSer.DeserializeJson(lcJson)
@@ -338,8 +354,10 @@ JSON has literal values for simple types and you can serialize and deserialize t
 ? loSer.Serialize( CAST("Hello World" as Blob)) && "SGVsbG8gV29ybGQ="
 ```
 
+One of the big reasons why JSON works so well is that it has only a few limited base types which can be represented easily by most languages - including FoxPro. Type variations was one of the big stumbling blocks with SOAP, as XML had to confirm to strict schemas. JSON's simple base structure avoids most of type conversion issues.
+
 #### Collections and Arrays
-Single dimension arrays and collections are supported for serialization. This is common for serializing object arrays, or just representing db records as objects for example. 
+Single dimension arrays and collections are supported for serialization. This is common for serializing object arrays or database cursor rows as objects for example. 
 
 ```foxpro
 loSer = CREATEOBJECT("wwJsonSerializer")
@@ -403,20 +421,18 @@ This produces a top level array:
       "firstname": "Pat",
       "lastname": "@ Accounting",
       "company": "Windsurf Warehouse SF",
-      "careof": "Pat @ Accounting",
       "address": "405 South Airport Blvd.  \r\nSouth San Francisco, CA 94080",
       "entered": "2014-11-02T10:46:40Z",
       "state": "OR"
     },
     {
       "id": "_4FG12Y7U7",
-      "firstname": "Steven",
-      "lastname": "Black",
-      "company": "SBC",
-      "careof": "Steven Black",
-      "address": "12 East  Street\r\nKingston, ON\r\nK7K 6T3 Canada\r\n",
+      "firstname": "Frank",
+      "lastname": "Green",
+      "company": "Greenbay Lawns",
+      "address": "12 North  Street\r\nSF CA 94122",
       "entered": "2014-06-02T09:46:40Z",
-      "state": ""
+      "state": "CA"
     },
     ...
 ]
@@ -449,20 +465,18 @@ Here the `.CustomerList` property is created as a property of the `loCust` objec
       "firstname": "Pat",
       "lastname": "@ Accounting",
       "company": "Windsurf Warehouse SF",
-      "careof": "Pat @ Accounting",
       "address": "405 South Airport Blvd.\nSan Francisco, CA 94080",
       "entered": "2014-11-02T10:46:40Z",
       "state": "OR"
     },
     {
       "id": "_4FG12Y7U7",
-      "firstname": "Steven",
-      "lastname": "Black",
-      "company": "SBC",
-      "careof": "Steven Black",
-      "address": "12 East  Street\nKingston, ON\nK7K 6T3 Canada\n",
+      "firstname": "Frank",
+      "lastname": "Green",
+      "company": "Greenbay Lawns",
+      "address": "12 North  Street\r\nSF CA 94122",
       "entered": "2014-06-02T09:46:40Z",
-      "state": ""
+      "state": "CA"
     }
   ],
   "entered": "2021-09-25T04:49:02Z",
@@ -492,20 +506,18 @@ Note that I'm not naming all fields in this list - only the fields I actually ne
       "firstName": "Pat",
       "lastName": "@ Accounting",
       "company": "Windsurf Warehouse SF",
-      "careof": "Pat @ Accounting",
       "address": "405 South Airport Blvd.\nSan Francisco, CA 94080",
       "entered": "2014-11-02T10:46:40Z",
       "state": "OR"
     },
     {
       "id": "_4FG12Y7U7",
-      "firstName": "Steven",
-      "lastName": "Black",
-      "company": "SBC",
-      "careof": "Steven Black",
-      "address": "12 East  Street\nKingston, ON\nK7K 6T3 Canada\n",
+      "firstname": "Frank",
+      "lastname": "Green",
+      "company": "Greenbay Lawns",
+      "address": "12 North  Street\r\nSF CA 94122",
       "entered": "2014-06-02T09:46:40Z",
-      "state": ""
+      "state": "CA"
     }
   ],
   "entered": "2021-09-25T04:49:02Z",
@@ -513,7 +525,7 @@ Note that I'm not naming all fields in this list - only the fields I actually ne
 }
 ```
 
-The `PropertyNameOverrides` property is immensely useful in ensuring that properties have the correct name. Since JSON is case sensitive, many services require that property names **match exactly** including case to update data.
+The `PropertyNameOverrides` property is immensely useful in ensuring that properties have the correct, case sensitive name. Since JSON is case sensitive many services require that property names **match case exactly** to update data.
 
 ## Putting HTTP and JSON Together
 At this point you have all the tools you need to:
@@ -523,16 +535,18 @@ At this point you have all the tools you need to:
 * Get back a JSON Response
 * Deserialize the JSON Response
 
-So, let's do this, on a live service!
+So, let's put it all together on a live service!
 
-I'm going to use my [AlbumViewer sample](https://albumviewer.west-wind.com) application on the West Wind Web Site that is publicalliy accessible so we can play with the data. This happens to be a .NET API service, but I'll show you how to create a subset using a FoxPro service later in this article. For now we don't care **how** the data is created, only what shape it comes back as.
+I'm going to use my [AlbumViewer sample](https://albumviewer.west-wind.com) application on the West Wind Web Site that is publicly accessible so we can play with the data. This happens to be a .NET API service, but I'll show you how to create a subset using a FoxPro service later in this article. 
+
+We don't really care **how** the data is created, only what shape it comes back as.
 
 > #### @icon-info-circle HTTP == Technology Independence
 > Because REST is HTTP based, any type of application can access it. It doesn't matter whether the service was built with .NET, Java, Rust or Turtle Basic. All that matters is what the API output is in order to consume it.
 >
 > You can also flip this concept around, and switch out the backend technology without affecting the client. So you can create the same interface in FoxPro or .NET. To access one or the other simply switch URLs. This can be a great migration path when updating to new technologies.
 >
-> Compare that to something tech specific like COM or .NET or JAVA specific APIS which require  platform specific tools/languages to interface with their respective APIs. With REST none of that matters because all we need is an HTTP client and a JSON serializer to access the data.
+> Compare that to something technology specific like COM or .NET or JAVA specific APIs, which require platform specific tools/languages to interface with their respective APIs. With REST none of that matters because all we need is an HTTP client and a JSON serializer to access the data.
 
 ### Retrieving a Collection of Simple Objects
 Let's start with an album list. This request retrieves an array of album objects that looks like this:
