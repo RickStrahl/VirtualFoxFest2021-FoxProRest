@@ -26,7 +26,7 @@ ADDPROPERTY(loCust,"Entered",DATETIME())
 SELECT TOP 2 * FROM CUSTOMERS ORDER BY LastName INTO CURSOR TQUery
 ADDPROPERTY(loCust,"CustomerList", "cursor:TQuery")
 
-loSer.PropertyNameOverrides = "firstName,lastName,customerList"
+loSer.PropertyNameOverrides = "firstName,lastName,customerList,billRate,shipAddr"
 
 lcJson =  loSer.Serialize(loCust, .T.)
 ShowJson(lcJson)

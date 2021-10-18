@@ -13,7 +13,7 @@ ADDPROPERTY(loUser, "Password", "test")
 LOCAL loClient as wwJsonServiceClient
 loClient = CREATEOBJECT("wwJsonServiceClient")
 
-loClient.Createserializer()
+*** .oSerializer and .oHttp instance can be configured
 loClient.oSerializer.PropertyNameOverrides = "userName,passWord"
 
 *** Pass the object for POST and return Auth Object

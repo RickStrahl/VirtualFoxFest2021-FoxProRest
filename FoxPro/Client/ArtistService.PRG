@@ -42,11 +42,6 @@ cPassword = ""
 ************************************************************************
 *  Init
 ****************************************
-***  Function:
-***    Assume:
-***      Pass:
-***    Return:
-************************************************************************
 FUNCTION Init(lcBaseUrl, lcUsername, lcPassword)
 
 IF !EMPTY(lcBaseUrl)   
@@ -62,14 +57,42 @@ ENDIF
 ENDFUNC
 *   Init
 
+
+************************************************************************
+*  GetArtists
+****************************************
+FUNCTION GetArtists()
+LOCAL loArtists
+  
+loArtists =  this.CallService( this.cServiceBaseurl + "api/artists")
+IF this.lError
+   RETURN NULL
+ENDIF
+  
+RETURN loArtists
+ENDFUNC
+*   GetArtists
+
+
+************************************************************************
+*  GetArtist
+****************************************
+FUNCTION GetArtist(lnId)
+LOCAL loArtist
+
+loArtist = this.CallService( this.cServiceBaseUrl + "api/artist/" + TRANSFORM(lnId) )
+IF THIS.lError
+   RETURN NULL
+ENDIF   
+
+RETURN loArtist
+ENDFUNC
+*   GetArtist
+
+
 ************************************************************************
 *  Authenticate
 ****************************************
-***  Function:
-***    Assume:
-***      Pass:
-***    Return:
-************************************************************************
 FUNCTION Authenticate(lcUsername, lcPassword)
 
 IF EMPTY(lcUsername) AND EMPTY(lcPassword)
@@ -90,60 +113,17 @@ IF this.lError
    RETURN .F.
 ENDIF
 
+* ? loAuth.Token
+
 THIS.cBearerToken = loAuth.Token
 RETURN .T.
 ENDFUNC
 *   Authenticate
 
-************************************************************************
-*  GetArtists
-****************************************
-***  Function:
-***    Assume:
-***      Pass:
-***    Return:
-************************************************************************
-FUNCTION GetArtists()
-LOCAL loArtists
-  
-loArtists =  this.CallService( this.cServiceBaseurl + "api/artists")
-IF this.lError
-   RETURN NULL
-ENDIF
-  
-RETURN loArtists
-ENDFUNC
-*   GetArtists
-
-************************************************************************
-*  GetArtist
-****************************************
-***  Function:
-***    Assume:
-***      Pass:
-***    Return:
-************************************************************************
-FUNCTION GetArtist(lnId)
-LOCAL loArtist
-
-loArtist = this.CallService( this.cServiceBaseUrl + "api/artist/" + TRANSFORM(lnId) )
-IF THIS.lError
-   RETURN NULL
-ENDIF   
-
-RETURN loArtist
-ENDFUNC
-*   GetArtist
-
 
 ************************************************************************
 *  UpdateArtist
 ****************************************
-***  Function:
-***    Assume:
-***      Pass:
-***    Return:
-************************************************************************
 FUNCTION UpdateArtist(loArtist)
 LOCAL loUpdated  
 

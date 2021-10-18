@@ -11,7 +11,7 @@ ADDPROPERTY(loUser, "Password", "test")
 lcJson = loSer.Serialize(loUser)
 
 loHttp.cContentType = "application/json"
-lcJson = loHttp.Post("https://albumviewer.west-wind.com/api/Authenticate", lcJson)
+lcJson = loHttp.Post("https://albumviewer.west-wind.com/api/authenticate", lcJson)
 
 IF loHttp.nError # 0
    ? "Failed: " + loHttp.cErrorMsg
@@ -56,7 +56,7 @@ lcJson = loSer.Serialize(loArtist)
 lohttp.AddHeader("Authorization", "Bearer " + lcToken)
 loHttp.cContentType = "application/json"
 *** Update existing record PUT. New record POST but backend handles either
-lcJson = loHttp.Post("https://albumviewer.west-wind.com/api/Artist", lcJson)
+lcJson = loHttp.Post("https://albumviewer.west-wind.com/api/artist", lcJson)
 IF loHttp.nError # 0
    ? "Failed: " + loHttp.cErrorMsg
 ENDIF

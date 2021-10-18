@@ -1,6 +1,7 @@
 CLEAR
 DO wwHttp
 
+*** Get Request
 loHttp = CREATEOBJECT("wwHttp")
 lcResult = loHttp.Get("https://albumviewer.west-wind.com/api/artist/1")
 *ShowJson(lcResult)
@@ -8,6 +9,8 @@ lcResult = loHttp.Get("https://albumviewer.west-wind.com/api/artist/1")
 ?
 ?
 
+
+*** POST Request
 TEXT TO lcJson NOSHOW
 {
   "username": "test",
@@ -19,12 +22,15 @@ loHttp = CREATEOBJECT("wwHttp")
 loHttp.cContentType = "application/json"
 lcResult = loHttp.Post("https://albumviewer.west-wind.com/api/authenticate",lcJson)
 
+*** Check for Request Failure
 IF loHttp.nError # 0
    ? loHttp.cErrorMsg
    RETURN
 ENDIF
+
+*** Check for error status codes
 IF loHttp.cResultcode # "200"
    ? "Invalid HTTP response code: " + loHttp.cResultCode
 ENDIF   
 
-? lcResult  
+? lcResult

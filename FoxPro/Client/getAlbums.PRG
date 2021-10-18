@@ -2,7 +2,7 @@ CLEAR
 DO wwhttp
 DO wwJsonSerializer
 
-#DEFINE MAX_ITEMS  3
+#DEFINE MAX_ITEMS  3  && Show only 3 items
 
 loHttp = CREATEOBJECT("wwhttp")
 lcJson = loHttp.Get("https://albumviewer.west-wind.com/api/albums")
