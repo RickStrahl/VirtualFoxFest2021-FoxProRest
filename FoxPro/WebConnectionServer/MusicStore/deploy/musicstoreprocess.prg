@@ -66,8 +66,6 @@ FUNCTION OnProcessInit
 Response.Encoding = "UTF8"
 Request.lUtf8Encoding = .T.
 
-
-
 lcOrigin = Request.ServerVariables("HTTP_ORIGIN")
 IF !EMPTY(lcOrigin)
 	*!*	*** Add CORS header to allow cross-site access from other domains/mobile devices on Ajax calls

@@ -48,6 +48,7 @@ llUseSsl = .F.   &&  hard-code. Web Connection Web Server only
 lnIISExpressPort = 7000
 lnWebConnectionWebServerPort = 5200
 
+
 lcWcPath = ADDBS("C:\WEBCONNECTION\FOX\")
 lcWebPath = LOWER(FULLPATH("..\web"))   && path to Web files 
 lcDotnetServerPath = lower(FULLPATH("..\WebConnectionWebServer\"))

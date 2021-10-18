@@ -3,7 +3,7 @@
    <HandledExtensions>.ms,.wc,.wcs,.wcsx</HandledExtensions>
    <DefaultFiles>default.ms,Default.htm,index.html</DefaultFiles>
    <VirtualDirectory>/</VirtualDirectory>
-   <MessagingMechanism>File</MessagingMechanism>
+   <MessagingMechanism>Com</MessagingMechanism>
    <ServerCount>2</ServerCount>
    <AutoStartServers>false</AutoStartServers>
    <ComServerProgId>Musicstore.MusicstoreServer</ComServerProgId>

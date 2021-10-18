@@ -208,7 +208,7 @@ DO wwDotnetBridge
 InitializeDotnetVersion("V4")  && Use Version 4
 
 *** Load Music Store Libraries
-DO MusicStore
+DO MusicStoreBusiness
 *** Add any SET CLASSLIB or SET PROCEDURE code here
 
 ENDFUNC

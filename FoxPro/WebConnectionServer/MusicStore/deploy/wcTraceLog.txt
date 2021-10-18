@@ -34,3 +34,537 @@ Handled by: Musicstoreserver.OnError()<br>
 
 Handled by: Musicstoreserver.OnError()<br>
 </pre>
+10/18/21 10:16:23 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:16:23 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:16:31 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:16:31 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:16:39 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:16:39 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:17:16 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:17:16 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:19:04 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:19:04 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:21:17 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/21 10:21:17 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 2031
+   Message: User-interface operation not allowed at this time.
+   Details: Code inside of Server OnLoad() failed
+      Code: 
+   Program: showserverform
+   Line No: 1370
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:24:29 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: 
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:24:29 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: 
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:26:18 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: 
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:26:18 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: 
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:30:48 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:30:48 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:31:52 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:31:52 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:34:44 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:34:44 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:37:20 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:37:20 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:37:46 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:37:46 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:38:18 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:38:18 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:39:33 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:39:33 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:41:31 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:41:31 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:42:23 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:42:23 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:43:25 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:43:25 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:45:08 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:45:08 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:46:13 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 10:46:13 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: CLEAR ALL
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 11:03:48 AM - Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: 
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>
+10/18/2021 11:03:48 AM - Logging failed: Processing Error - Server Startup
+
+<pre>
+     Error: 1951
+   Message: Cannot clear the object MUSICSTORESERVER because it is in use.
+   Details: MUSICSTORESERVER 
+            Code inside of Server OnLoad() failed
+      Code: 
+   Program: musicstoremain
+   Line No: 92
+
+Handled by: Musicstoreserver.OnError()<br>
+</pre>

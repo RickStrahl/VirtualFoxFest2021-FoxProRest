@@ -1,3 +1,10 @@
+GET /api/artists HTTP/1.1
+Accept-Encoding: gzip,deflate
+Accept: application/json
+Websurge-Request-Name: Artist List
+
+------------------------------------------------------------------
+
 GET /api/albums HTTP/1.1
 Accept-Encoding: gzip,deflate
 Accept: application/json
@@ -10,13 +17,6 @@ Accept-Encoding: gzip,deflate
 Accept: application/json
 Websurge-Request-Inactive: 1
 Websurge-Request-Name: AlbumList Page
-
-------------------------------------------------------------------
-
-GET /api/artists?name=rick&company=new HTTP/1.1
-Accept-Encoding: gzip,deflate
-Accept: application/json
-Websurge-Request-Name: Artist List
 
 ------------------------------------------------------------------
 
@@ -133,6 +133,7 @@ Accept-Encoding: gzip,deflate
 Accept: application/json
 Authorization: Bearer
 Content-Type: application/json
+Websurge-Request-Inactive: 1
 Websurge-Request-Name: Update Track
 
 {
@@ -214,19 +215,10 @@ Websurge-Request-Name: Delete Album
 
 ------------------------------------------------------------------
 
-GET /api/artistlookup?search=M HTTP/1.1
+GET /api/artistlookup?search=An HTTP/1.1
 Accept-Encoding: gzip,deflate
 Accept: application/json
-Websurge-Request-Inactive: 1
 Websurge-Request-Name: Artist Lookup (auto complete search)
-
-------------------------------------------------------------------
-
-GET /api/test/HelloWorld HTTP/1.1
-Accept-Encoding: gzip,deflate
-Accept: application/json
-Websurge-Request-Inactive: 1
-Websurge-Request-Name: Helloworld
 
 ------------------------------------------------------------------
 
