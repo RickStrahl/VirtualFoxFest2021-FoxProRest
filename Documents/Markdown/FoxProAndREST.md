@@ -3,7 +3,8 @@
 <div style="margin: 1em 0 3em 0; font-size: 0.8em;">
 
 *by **Rick Strahl***  
-*prepared for **Virtual FoxFest**, 2021*
+*prepared for **Virtual FoxFest**, 2021*  
+*[Session Example Code](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest) on GitHub*
 
 </div>
 
