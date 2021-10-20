@@ -194,7 +194,6 @@ Accept-Encoding: gzip, deflate
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 User-Agent: West Wind HTTP .NET Client
 Content-Type: application/json
-Websurge-Request-Inactive: 1
 Websurge-Request-Name: Update Artist
 
 {
@@ -261,6 +260,13 @@ Websurge-Request-Name: Login
 
 ------------------------------------------------------------------
 
+GET /api/authenticate HTTP/1.1
+Accept: application/json
+Accept-Encoding: gzip, deflate, br
+Websurge-Request-Name: Login GET (Error: Status 405)
+
+------------------------------------------------------------------
+
 GET /api/logout HTTP/1.1
 Accept-Encoding: gzip,deflate
 Websurge-Request-Name: Logout
@@ -316,7 +322,7 @@ Websurge-Request-Name: Test Page West Wind
   "UpdateHeadersFromRequest": true,
   "ReplaceQueryStringValuePairs": null,
   "ReplaceCookieValue": null,
-  "ReplaceAuthorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwianRpIjoiODRiYWM3YmYtZTZhZS00NzQ5LWJkNjItYzMzMGM4ZmZhZjk5IiwiVXNlclN0YXRlIjoiVGVzdCBVc2VyfHRlc3R8fEZhbHNlfDF8bnVsbHxkZDkxNTM0MyIsImV4cCI6MTYzMjYzNTQ1MSwiaXNzIjoiaHR0cHM6Ly9hbGJ1bXZpZXdlci53ZXN0LXdpbmQuY29tIiwiYXVkIjoiaHR0cHM6Ly9hbGJ1bXZpZXdlci53ZXN0LXdpbmQuY29tIn0.31kheFnnjYBaJ1CA7dyjkNVluk6iv_m8dyDvREdpdJ8",
+  "ReplaceAuthorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwianRpIjoiNjMyZGQ0MjYtNDljMS00OTkzLTgyMTMtY2ZkNTJhYmU5Y2NmIiwiVXNlclN0YXRlIjoiVGVzdCBVc2VyfHRlc3R8fEZhbHNlfDF8bnVsbHw4MjZmM2U5MCIsImV4cCI6MTYzNDY4ODk4MywiaXNzIjoiaHR0cHM6Ly9hbGJ1bXZpZXdlci53ZXN0LXdpbmQuY29tIiwiYXVkIjoiaHR0cHM6Ly9hbGJ1bXZpZXdlci53ZXN0LXdpbmQuY29tIn0.b8qPbJjOqMI8zBUhfITkCkL-6LAuZ_9ta0ELs6_TzSI",
   "Username": null,
   "Password": null,
   "Users": [],

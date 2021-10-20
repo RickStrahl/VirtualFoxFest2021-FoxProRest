@@ -4,11 +4,10 @@ DO wwHttp
 *** Get Request
 loHttp = CREATEOBJECT("wwHttp")
 lcResult = loHttp.Get("https://albumviewer.west-wind.com/api/artist/1")
-*ShowJson(lcResult)
-? PADR(lcResult,1200)
+* ShowJson(lcResult)
+? PADR(lcResult,500)
 ?
 ?
-
 
 *** POST Request
 TEXT TO lcJson NOSHOW

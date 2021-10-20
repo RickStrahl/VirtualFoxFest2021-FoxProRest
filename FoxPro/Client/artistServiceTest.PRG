@@ -1,5 +1,6 @@
 DO ArtistService
 
+
 LOCAL loService as AristService 
 loService = CREATEOBJECT("ArtistService")
 

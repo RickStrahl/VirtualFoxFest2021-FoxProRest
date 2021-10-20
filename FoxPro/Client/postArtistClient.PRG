@@ -17,7 +17,7 @@ loClient = CREATEOBJECT("wwJsonServiceClient")
 loClient.oSerializer.PropertyNameOverrides = "userName,passWord"
 
 *** Pass the object for POST and return Auth Object
-loAuth = loClient.Callservice("https://albumviewer.west-wind.com/api/Authenticate", loUser, "POST")
+loAuth = loClient.CallService("https://albumviewer.west-wind.com/api/Authenticate", loUser, "POST")
 
 IF loClient.lError
    ? "Failed: " + loClient.cErrorMsg

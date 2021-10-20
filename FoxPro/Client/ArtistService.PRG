@@ -34,7 +34,10 @@ cServiceBaseUrl = "https://albumviewer.west-wind.com/"
 
 *** AUTHENTICATION 
 
+*** Cached Bearer Token
 cBearerToken = ""
+
+*** Username and Password for Authentication
 cUsername = ""
 cPassword = ""
 
@@ -99,6 +102,7 @@ IF EMPTY(lcUsername) AND EMPTY(lcPassword)
    lcUsername = this.cUsername
    lcPassword = this.cPassword
 ENDIF
+
 IF EMPTY(lcUsername) AND EMPTY(lcPassword)
    this.cErrorMsg = "Username and password cannot be empty."
    RETURN .F.
@@ -109,7 +113,17 @@ ADDPROPERTY(loLogin, "userName", lcUsername)
 ADDPROPERTY(loLogin, "password", lcPassword)
 
 loAuth = this.CallService(this.cServiceBaseUrl + "api/authenticate",loLogin,"POST")
+
+llResult = .F.
+
 IF this.lError
+   RETURN .F.
+ENDIF
+
+*** Capture Error info Returned via JSON
+IF TYPE("loAuth.IsError") == "L"
+   this.cErrorMsg = loAuth.Message
+   this.lError = .T.
    RETURN .F.
 ENDIF
 
@@ -142,6 +156,13 @@ loUpdated = THIS.CallService( THIS.cServiceBaseUrl + "api/artist", loArtist, "PO
 IF this.lError 
    RETURN NULL
 ENDIF   
+
+*** Capture Error info Returned via JSON
+IF TYPE("loAuth.IsError") == "L"
+   this.cErrorMsg = loUpdated.Message
+   this.lError = .T.
+   RETURN NULL
+ENDIF
 
 RETURN loUpdated
 ENDFUNC

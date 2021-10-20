@@ -1,4 +1,5 @@
 CLEAR
+DO wwHttp
 DO wwJsonSerializer
 
 LOCAL loHttp as wwHttp, loSer as wwJsonSerializer
