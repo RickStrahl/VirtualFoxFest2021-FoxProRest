@@ -25,7 +25,7 @@ You will learn:
 ## Documents
 
 * [White Paper PDF](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/blob/main/Documents/Strahl_FoxProAndREST.pdf)
-* [White Paper HTML](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/blob/main/Documents/Markdown/FoxProAndREST.md) 
+* [White Paper HTML](https://www.west-wind.com/wconnect/weblog/ShowEntry.blog?id=9169) 
 * [Slides](https://github.com/RickStrahl/VirtualFoxFest2021-FoxProRest/raw/main/Documents/Strahl_FoxProREST.pptx)
 
 ## Source Code

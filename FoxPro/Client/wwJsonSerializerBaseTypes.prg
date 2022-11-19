@@ -9,7 +9,7 @@ loSer = CREATEOBJECT("wwJsonSerializer")
 ? loSer.Serialize( CAST("Hello World" as Blob))        && base64
 
 *** Serialize a top level cursor to a JSON Collection
-SELECT TOP 2 Company, FirstName, LastName, BillRate 
+SELECT TOP 2 Company, FirstName, LastName, BillRate ;
        FROM CUSTOMERS ORDER BY LastName INTO CURSOR TQUery
 ? loSer.Serialize("cursor:TQuery",.T.)
 

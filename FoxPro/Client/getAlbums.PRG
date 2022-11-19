@@ -10,7 +10,7 @@ lcJson = loHttp.Get("https://albumviewer.west-wind.com/api/albums")
 * ShowJson(lcJson)
 
 loSer = CREATEOBJECT("wwJsonSerializer")
-loAlbums = loSer.Deserialize(lcJson)
+loAlbums = loSer.Deserialize(lcJson) && collection of artists
 
 lnCount = 0
 FOR EACH loAlbum IN loAlbums FOXOBJECT

@@ -130,9 +130,11 @@ ENDIF
 * ? loAuth.Token
 
 THIS.cBearerToken = loAuth.Token
+
 RETURN .T.
 ENDFUNC
 *   Authenticate
+
 
 
 ************************************************************************

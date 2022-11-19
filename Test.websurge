@@ -1,0 +1,98 @@
+GET https://albumviewer.west-wind.com/albums HTTP/1.1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/isAuthenticated HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/albums
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/albums HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/albums
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/album/93 HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/album/93
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/albums HTTP/1.1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/isAuthenticated HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/albums
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/albums HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/albums
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/artists HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/artists
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/applicationstats HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/options
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/reloadData HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/options
+
+------------------------------------------------------------------
+
+POST https://albumviewer.west-wind.com/api/authenticate HTTP/1.1
+Accept: application/json, text/plain, */*
+Content-Type: application/json
+Authorization: Bearer null
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Origin: https://albumviewer.west-wind.com
+Referer: https://albumviewer.west-wind.com/login
+
+{"username":"test","password":"test"}
+
+------------------------------------------------------------------
+
+GET https://albumviewer.west-wind.com/api/albums HTTP/1.1
+Accept: application/json, text/plain, */*
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwianRpIjoiMTI2YTkzNmItZjY2NC00Y2U5LTljNzItZTI2ZGJkN2Q4ZDg4IiwiVXNlclN0YXRlIjoiVGVzdCBVc2VyfHRlc3R8fEZhbHNlfDF8bnVsbHxjOWMyMWMwYSIsImV4cCI6MTYzNzY1NDEwNywiaXNzIjoiaHR0cHM6Ly9hbGJ1bXZpZXdlci53ZXN0LXdpbmQuY29tIiwiYXVkIjoiaHR0cHM6Ly9hbGJ1bXZpZXdlci53ZXN0LXdpbmQuY29tIn0.6ieaOL5iwEydHEFp-LwikNYvuoDrz6iQIU8HwWzDNsU
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 Edg/96.0.1054.29
+Referer: https://albumviewer.west-wind.com/albums
+
+------------------------------------------------------------------
+
